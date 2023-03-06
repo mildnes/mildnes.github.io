@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://mildnes.github.io</id>
+    <title>Mildnes Home</title>
+    <updated>2023-03-06T02:53:49.452Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://mildnes.github.io"/>
+    <link rel="self" href="https://mildnes.github.io/atom.xml"/>
+    <subtitle>温故而知新</subtitle>
+    <logo>https://mildnes.github.io/images/avatar.png</logo>
+    <icon>https://mildnes.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, Mildnes Home</rights>
+    <entry>
+        <title type="html"><![CDATA[常用一键脚本]]></title>
+        <id>https://mildnes.github.io/iTXPK1uao/</id>
+        <link href="https://mildnes.github.io/iTXPK1uao/">
+        </link>
+        <updated>2023-03-05T04:01:05.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="各种一键脚本">各种一键脚本</h1>
+<p>各种脚本</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="各种一键脚本">各种一键脚本</h1>
+<p>各种脚本</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[锐捷AP绑定vlan到指定ssid（访客网络）]]></title>
+        <id>https://mildnes.github.io/9PI2fqo4w/</id>
+        <link href="https://mildnes.github.io/9PI2fqo4w/">
+        </link>
+        <updated>2023-03-02T12:19:49.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="首先在此感谢blanksign大佬的帮助">首先在此感谢blanksign大佬的帮助</h2>
+<p>前言：瞎折腾换了一套ap，把之前的ruckus给换掉了。顺便问一下有需要的吗，打骨折便宜卖了。无需ac即可自动组网，漫游速度也很快，也可以搭建虚拟ac控制。功能更丰富。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="首先在此感谢blanksign大佬的帮助">首先在此感谢blanksign大佬的帮助</h2>
+<p>前言：瞎折腾换了一套ap，把之前的ruckus给换掉了。顺便问一下有需要的吗，打骨折便宜卖了。无需ac即可自动组网，漫游速度也很快，也可以搭建虚拟ac控制。功能更丰富。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[群晖创建macvlan，与宿主机容器通讯]]></title>
+        <id>https://mildnes.github.io/00uB6wVby/</id>
+        <link href="https://mildnes.github.io/00uB6wVby/">
+        </link>
+        <updated>2023-03-02T04:48:55.000Z</updated>
+        <summary type="html"><![CDATA[<p>默认开启macvlan之后无法与宿主机容器通信。需要单独配置。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>默认开启macvlan之后无法与宿主机容器通信。需要单独配置。</p>
+]]></content>
+    </entry>
+</feed>

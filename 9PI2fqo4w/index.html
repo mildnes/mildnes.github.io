@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="keywords" content="mildnes静态个人博客">
+<meta name="description" content="温故而知新">
+<meta name="theme-color" content="#228be6">
+<title>锐捷AP绑定vlan到指定ssid（访客网络） | Mildnes Home</title>
+<link rel="shortcut icon" href="/favicon.ico?v=1678071226460">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="stylesheet" href="/media/css/gemini.css">
+
+<link rel="stylesheet" href="/media/fonts/font-awesome.css">
+<link
+  href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Rosario:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext"
+  rel="stylesheet" type="text/css">
+
+<link href="/media/hljs/styles/railscasts.css"
+  rel="stylesheet">
+
+<script src="/media/hljs/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.0/velocity.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.0/velocity.ui.min.js"></script>
+
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?437a16309255e5e5fb4a1c81130fdb2e";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+  <meta name="description" content="锐捷AP绑定vlan到指定ssid（访客网络）" />
+  <meta name="keywords" content="锐捷,ap,vlan" />
+</head>
+
+<body>
+  <div class="head-top-line"></div>
+  <div class="header-box">
+    
+<div class="gemini">
+  <header class="header  ">
+    <div class="blog-header box-shadow-wrapper bg-color " id="header">
+      <div class="nav-toggle" id="nav_toggle">
+        <div class="toggle-box">
+          <div class="line line-top"></div>
+          <div class="line line-center"></div>
+          <div class="line line-bottom"></div>
+        </div>
+      </div>
+      <div class="site-meta">       
+        <div class="site-title">
+          
+            <a href="/" class="brand">
+              <span>Mildnes Home</span>
+            </a>  
+          
+        </div>
+        
+          <p class="subtitle">精于心，简于形</p>
+        
+      </div>
+      <nav class="site-nav" id="site_nav">
+        <ul id="nav_ul">
+          
+            
+            
+              
+                <li class="nav-item ">
+                  <a href="/friends/" target="_blank">
+                    
+                      <i class="fa fa-address-book"></i>友情链接
+                    
+                  </a>
+                </li>
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/" target="_self">
+                  <i class="fa fa-home"></i> 首页
+                </a>
+              
+            </li>
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/archives/" target="_self">
+                  <i class="fa fa-archive"></i> 归档
+                </a>
+              
+            </li>
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/tags/" target="_self">
+                  <i class="fa fa-tags"></i> 标签
+                </a>
+              
+            </li>
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/about/" target="_self">
+                  <i class="fa fa-globe"></i> 关于
+                </a>
+              
+            </li>
+          
+          
+            
+          
+        </ul>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<script type="text/javascript"> 
+ 
+  let showNav = true;
+
+  let navToggle = document.querySelector('#nav_toggle'),
+  siteNav = document.querySelector('#site_nav');
+  
+  function navClick() {
+    let sideBar = document.querySelector('.sidebar');
+    let navUl = document.querySelector('#nav_ul');
+    navToggle.classList.toggle('nav-toggle-active');
+    siteNav.classList.toggle('nav-menu-active');
+    if (siteNav.classList.contains('nav-menu-active')) {
+      siteNav.style = "height: " + (navUl.children.length * 42) +"px !important";
+    } else {
+      siteNav.style = "";
+    }
+  }
+
+  navToggle.addEventListener('click',navClick);  
+</script>
+  </div>
+  <div class="main-continer">
+    
+    <div
+      class="section-layout gemini ">
+      <div class="section-layout-wrapper">
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body gemini" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
+<div class="sidebar-wrapper box-shadow-wrapper bg-color">
+  <div class="sidebar-item">
+    <img class="site-author-image right-motion" src="/images/avatar.png"/>
+    <p class="site-author-name">Mildnes</p>
+    
+    <div class="site-description right-motion">
+      
+        <p id="binft">吃嘛嘛香\n 干嘛嘛不行</p>
+      
+    </div>
+    
+  </div>
+  <div class="sidebar-item side-item-stat right-motion">
+    <div class="sidebar-item-box">
+      <a href="/archives/">
+        
+        <span class="site-item-stat-count">3</span>
+        <span class="site-item-stat-name">文章</span>
+      </a>
+    </div>
+    <div class="sidebar-item-box">
+      <a href="">
+        <span class="site-item-stat-count">8</span>
+        <span class="site-item-stat-name">分类</span>
+      </a>
+    </div>
+    <div class="sidebar-item-box">
+      <a href="/tags/">
+        <span class="site-item-stat-count">8</span>
+        <span class="site-item-stat-name">标签</span>
+      </a>
+    </div>
+  </div>
+  
+    
+      <div class="sidebar-item">
+        <span class="site-item-rss">
+            <i class="fa fa-rss"></i>
+            <a href="https://mildnes.github.io/atom.xml" target="_blank">RSS</a>
+        </span>
+      </div>
+    
+  
+  
+
+
+</div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E9%A6%96%E5%85%88%E5%9C%A8%E6%AD%A4%E6%84%9F%E8%B0%A2blanksign%E5%A4%A7%E4%BD%AC%E7%9A%84%E5%B8%AE%E5%8A%A9">首先在此感谢blanksign大佬的帮助</a></li>
+<li><a href="#1-%E9%94%90%E6%8D%B7ap%E7%BB%84%E7%BD%91%E9%85%8D%E7%BD%AE">1、锐捷AP组网配置</a></li>
+<li><a href="#2-%E9%85%8D%E7%BD%AE%E4%B8%BB%E8%B7%AF%E7%94%B1%E7%9A%84vlan">2、配置主路由的VLAN</a>
+<ul>
+<li><a href="#%E7%A1%AC%E4%BB%B6%E6%B8%85%E5%8D%95">硬件清单</a></li>
+<li><a href="#%E4%B8%BB%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE">主路由配置</a></li>
+</ul>
+</li>
+<li><a href="#%E6%A0%B8%E5%BF%83%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AE">核心交换机配置</a></li>
+<li><a href="#%E4%B8%8B%E6%B8%B8%E9%94%90%E6%8D%B7%E4%BA%A4%E6%8D%A2%E6%9C%BA%E8%AE%BE%E7%BD%AE">下游锐捷交换机设置</a></li>
+<li><a href="#%E8%BF%9B%E5%85%A5%E9%94%90%E6%8D%B7ap%E7%9A%84%E6%95%B4%E7%BD%91%E7%AE%A1%E7%90%86">进入锐捷ap的整网管理</a></li>
+<li><a href="#wifi%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95">WIFI连接测试</a></li>
+<li><a href="#%E6%9C%89%E6%97%B6%E9%97%B4%E5%86%8D%E6%8A%8Aesxi%E4%B8%8B%E9%85%8D%E7%BD%AEopwnwrt%E7%9A%84vlan%E6%B0%B4%E4%B8%80%E4%B8%8B%E7%94%A8%E6%9D%A5%E7%BB%99%E8%AE%BF%E5%AE%A2%E7%BD%91%E7%BB%9C%E5%87%BA%E5%9B%BD%E4%BD%BF%E7%94%A8">有时间再把esxi下配置opwnwrt的vlan水一下，用来给访客网络出国使用。</a>
+<ul>
+<li><a href="#%E6%89%A9%E5%B1%95">扩展</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
+      }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
+    });
+  }
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
+          
+        
+      </div>
+    </div>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://mildnes.github.io/9PI2fqo4w/">
+      锐捷AP绑定vlan到指定ssid（访客网络）
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span>发布于</span>
+      <span>2023-03-02</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show">分类于</span>
+      
+      
+      <a href="https://mildnes.github.io/tag/rW0JJvdKl/">
+        <span>锐捷</span>
+      </a>、
+      
+      
+      
+      <a href="https://mildnes.github.io/tag/m47SsORo2S/">
+        <span>ap</span>
+      </a>、
+      
+      
+      
+      <a href="https://mildnes.github.io/tag/IRIxh0U62o/">
+        <span>vlan</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>2分钟</span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>472<span class="pc-show">字数</span></span>
+    </span>
+    
+    
+    
+    <span id="/9PI2fqo4w/" data-flag-title="锐捷AP绑定vlan到指定ssid（访客网络）" class="meta-item pc-show leancloud_visitors">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-eye"></i>
+      <span>浏览量：<span class="leancloud-visitors-count"></span></span>
+    </span>
+    
+  </div>
+</header>
+            <div class="post-body next-md-body" id="post_body">
+              <h2 id="首先在此感谢blanksign大佬的帮助">首先在此感谢blanksign大佬的帮助</h2>
+<p>前言：瞎折腾换了一套ap，把之前的ruckus给换掉了。顺便问一下有需要的吗，打骨折便宜卖了。无需ac即可自动组网，漫游速度也很快，也可以搭建虚拟ac控制。功能更丰富。</p>
+<!-- more -->
+<h2 id="1-锐捷ap组网配置">1、锐捷AP组网配置</h2>
+<p>省略<br>
+<strong>配置完如下图</strong><br>
+<img src="https://mildnes.github.io/post-images/1677759666369.png" alt="" loading="lazy"></p>
+<h2 id="2-配置主路由的vlan">2、配置主路由的VLAN</h2>
+<h3 id="硬件清单">硬件清单</h3>
+<p>主路由：ER2260-T<br>
+核心交换机：华为1720系列<br>
+下游交换机：锐捷205G-P</p>
+<h3 id="主路由配置">主路由配置</h3>
+<p>1、进入tplink后台，找到lan接口，添加如下<img src="https://mildnes.github.io/post-images/1677759645195.png" alt="" loading="lazy"><br>
+2、配置vlan的dhcp<br>
+在dhcp服务里面新增vlan的网段<br>
+<img src="https://mildnes.github.io/post-images/1677759674770.png" alt="" loading="lazy"><br>
+3、添加NAT转发<br>
+传输设置——NAT设置——新增vlan。<br>
+<img src="https://mildnes.github.io/post-images/1677759702095.png" alt="" loading="lazy"></p>
+<ul>
+<li>到此主路由设置完成</li>
+</ul>
+<h2 id="核心交换机配置">核心交换机配置</h2>
+<p>1、进入交换机后台，找到配置-基础业务管理-接口配置<br>
+<img src="https://mildnes.github.io/post-images/1677759711678.png" alt="" loading="lazy"><br>
+选择跟2260t连接的上游接口，我这里用的是spf+ 2，交换机里面是<code>XGigabitEthernet0/0/2</code><br>
+2、选择自定义配置，选中接口，配置如下<br>
+<img src="https://mildnes.github.io/post-images/1677759718502.png" alt="" loading="lazy"><br>
+点击应用核心交换机设置完成</p>
+<h2 id="下游锐捷交换机设置">下游锐捷交换机设置</h2>
+<p>特意咨询了锐捷的技术，说是直接使用傻瓜模式也可以直接放行所有vlan，但是实测并不行。</p>
+<ol>
+<li>进入交换机后台</li>
+<li>打开vlan</li>
+<li>添加vlan标签</li>
+<li>设置所有端口为trunk<br>
+<img src="https://mildnes.github.io/post-images/1677759726371.png" alt="" loading="lazy"><br>
+<img src="https://mildnes.github.io/post-images/1677759734842.png" alt="" loading="lazy"><br>
+<img src="https://mildnes.github.io/post-images/1677759744855.png" alt="" loading="lazy"></li>
+</ol>
+<ul>
+<li>保存应用，下游交换机配置完成</li>
+</ul>
+<h2 id="进入锐捷ap的整网管理">进入锐捷ap的整网管理</h2>
+<ol>
+<li>选中整网管理</li>
+<li>无线设置</li>
+<li>添加wifi，点开高级</li>
+<li>配置vlan，网段隔离<br>
+<img src="https://mildnes.github.io/post-images/1677759767313.png" alt="" loading="lazy"><br>
+<img src="https://mildnes.github.io/post-images/1677759771892.png" alt="" loading="lazy"></li>
+</ol>
+<ul>
+<li>保存应用，ap设置完成</li>
+</ul>
+<h2 id="wifi连接测试">WIFI连接测试</h2>
+<p>无图，成功了，就这样。。。</p>
+<figure data-type="image" tabindex="1"><img src="https://mildnes.github.io/post-images/1677759777535.jpeg" alt="" loading="lazy"></figure>
+<h2 id="有时间再把esxi下配置opwnwrt的vlan水一下用来给访客网络出国使用">有时间再把esxi下配置opwnwrt的vlan水一下，用来给访客网络出国使用。</h2>
+<h3 id="扩展">扩展</h3>
+<p><strong>WIFI之间用户隔离可以在ap上设置<br>
+物理之间的隔离需要到交换机上去配置</strong></p>
+
+            </div>
+            <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Mildnes
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://mildnes.github.io/9PI2fqo4w/" title="锐捷AP绑定vlan到指定ssid（访客网络）">https://mildnes.github.io/9PI2fqo4w/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+      <a href="https://mildnes.github.io/tag/rW0JJvdKl/"># 锐捷</a>
+    
+      <a href="https://mildnes.github.io/tag/m47SsORo2S/"># ap</a>
+    
+      <a href="https://mildnes.github.io/tag/IRIxh0U62o/"># vlan</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="常用一键脚本" href="https://mildnes.github.io/iTXPK1uao/">常用一键脚本</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="常用一键脚本" href="https://mildnes.github.io/iTXPK1uao/">上一篇</a>
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="群晖创建macvlan，与宿主机容器通讯" href="https://mildnes.github.io/00uB6wVby/">群晖创建macvlan，与宿主机容器通讯</a>
+        <a class="nav-mobile-next" title="群晖创建macvlan，与宿主机容器通讯" href="https://mildnes.github.io/00uB6wVby/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
+</div>
+            
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.4/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'DmDxb0Uy25spHamf0qJ7PV3F-gzGzoHsz',
+    appKey: 'AOhZlH69IgXhmxRng1M6YjzF',
+    avatar: '',
+    placeholder: '',
+    pageSize: '20',
+    lang: 'zh-cn',
+    visitor: 'true' === 'true',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-box">
+  <footer class="footer">
+    <div class="copyright">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | © 2019-2020 Theme By <a href="https://github.com/hsxyhao/gridea-theme-next" target="_blank">HsxyHao</a>
+    </div>
+    <div class="poweredby">
+      
+    </div>
+  </footer>
+  
+  
+  <div class="gemini back-to-top" id="back_to_top">
+    <i class="fa fa-arrow-up"></i>
+    
+    <span class="scrollpercent">
+      <span id="back_to_top_text">0</span>%
+    </span>
+    
+  </div>
+  
+  
+  
+</div>
+<script>
+
+  let sideBarOpen = 'sidebar-open';
+  let body = document.body;
+  let back2Top = document.querySelector('#back_to_top'),
+  back2TopText = document.querySelector('#back_to_top_text'),
+  drawerBox = document.querySelector('#drawer_box'),
+  rightSideBar = document.querySelector('.sidebar'),
+  viewport = document.querySelector('body');
+
+  function scrollAnimation(currentY, targetY) {
+   
+    let needScrollTop = targetY - currentY
+    let _currentY = currentY
+    setTimeout(() => {
+      const dist = Math.ceil(needScrollTop / 10)
+      _currentY += dist
+      window.scrollTo(_currentY, currentY)
+      if (needScrollTop > 10 || needScrollTop < -10) {
+        scrollAnimation(_currentY, targetY)
+      } else {
+        window.scrollTo(_currentY, targetY)
+      }
+    }, 1)
+  }
+
+  back2Top.addEventListener("click", function(e) {
+    scrollAnimation(document.scrollingElement.scrollTop, 0);
+    e.stopPropagation();
+    return false;
+  });
+  
+  window.addEventListener('scroll', function(e) {
+    let percent = document.scrollingElement.scrollTop / (document.scrollingElement.scrollHeight - document.scrollingElement.clientHeight) * 100;
+    if (percent > 1 && !back2Top.classList.contains('back-top-active')) {
+      back2Top.classList.add('back-top-active');
+    }
+    if (percent == 0) {
+      back2Top.classList.remove('back-top-active');
+    }
+    if (back2TopText) {
+      back2TopText.textContent = Math.floor(percent);
+    }
+  });
+
+  
+  let hasCacu = false;
+  window.onresize = function() {
+    if (window.width > 991) {
+      calcuHeight();
+    } else {
+      hasCacu = false;
+    }
+  }
+
+  function calcuHeight() {
+    // 动态调整站点概览高度
+    if (!hasCacu && back2Top.classList.contains('pisces') || back2Top.classList.contains('gemini')) {
+      let sideBar = document.querySelector('.sidebar');
+      let navUl = document.querySelector('#site_nav');
+      sideBar.style = 'margin-top:' + (navUl.offsetHeight + navUl.offsetTop + 15) + 'px;';
+      hasCacu = true;
+    }
+  }
+  calcuHeight();
+  
+  let open = false, MOTION_TIME = 300, RIGHT_MOVE_DIS = '320px';
+
+  if (drawerBox) {
+    let rightMotions = document.querySelectorAll('.right-motion');
+    let right = drawerBox.classList.contains('right');
+
+    let transitionDir = right ? "transition.slideRightIn" : "transition.slideLeftIn";
+
+    let openProp, closeProp;
+    if (right) {
+      openProp = {
+        paddingRight: RIGHT_MOVE_DIS 
+      };
+      closeProp = {
+        paddingRight: '0px'
+      };
+    } else {
+      openProp = {
+        paddingLeft: RIGHT_MOVE_DIS 
+      };
+      closeProp = {
+        paddingLeft: '0px'
+      };
+    }
+
+    drawerBox.onclick = function() {
+      open = !open;
+      window.Velocity(rightSideBar, 'stop');
+      window.Velocity(viewport, 'stop');
+      window.Velocity(rightMotions, 'stop');
+      if (open) {
+        window.Velocity(rightSideBar, {
+          width: RIGHT_MOVE_DIS
+        }, {
+          duration: MOTION_TIME,
+          begin: function() {
+            window.Velocity(rightMotions, transitionDir,{ });
+          }
+        })
+        window.Velocity(viewport, openProp,{
+          duration: MOTION_TIME
+        });
+      } else {
+        window.Velocity(rightSideBar, {
+          width: '0px'
+        }, {
+          duration: MOTION_TIME,
+          begin: function() {
+            window.Velocity(rightMotions, {
+              opacity: 0
+            });
+          }
+        })
+        window.Velocity(viewport, closeProp ,{
+          duration: MOTION_TIME
+        });
+      }
+      for (let i = 0; i < drawerBox.children.length; i++) {
+        drawerBox.children[i].classList.toggle('muse-line');
+      }
+      drawerBox.classList.toggle(sideBarOpen);
+    }
+  }
+
+  // 链接跳转
+  let newWindow = 'false'
+  if (newWindow === 'true') {
+    let links = document.querySelectorAll('.post-body a')
+    links.forEach(item => {
+      if (!item.classList.contains('btn')) {
+        item.setAttribute("target","_blank");
+      }
+    })
+  }
+  // 代码高亮
+  hljs.initHighlightingOnLoad();
+
+</script>
+    <div class="light-box" id="light_box"></div>
+<script>
+  let imgs = document.querySelectorAll('.post-body img');
+  let lightBox = document.querySelector('#light_box');
+  lightBox.addEventListener('mousedown', (e) => {
+    e.preventDefault()
+  })
+  lightBox.addEventListener('mousewheel', (e) => {
+    e.preventDefault()
+  })
+  let width = window.innerWidth * 0.8;
+  lightBox.onclick = () => {
+    let img = lightBox.querySelector('img');
+    lightBox.style = '';
+    img && img.remove();
+  }
+  imgs.forEach(item => {
+    item.onclick = function (e) {
+      let lightImg = document.createElement('img');
+      lightImg.src = this.src;
+      lightBox.style = `height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.5);cursor: zoom-out;`;
+      lightImg.style = `width: ${width}px; border: 1px solid #fff; border-radius: 2px;`;
+      lightImg.onclick = function () {
+        lightBox.style = '';
+        this.remove();
+      }
+      lightBox.append(lightImg);
+    }
+  })
+</script>
+  </div>
+</body>
+<input hidden id="copy" />
+<script>
+  //拿来主义(真香)^_^，Clipboard 实现摘自掘金 https://juejin.im/post/5aefeb6e6fb9a07aa43c20af
+  window.Clipboard = (function (window, document, navigator) {
+    var textArea,
+      copy;
+
+    // 判断是不是ios端
+    function isOS() {
+      return navigator.userAgent.match(/ipad|iphone/i);
+    }
+    //创建文本元素
+    function createTextArea(text) {
+      textArea = document.createElement('textArea');
+      textArea.value = text;
+      textArea.style.width = 0;
+      textArea.style.height = 0;
+      textArea.clientHeight = 0;
+      textArea.clientWidth = 0;
+      document.body.appendChild(textArea);
+    }
+    //选择内容
+    function selectText() {
+      var range,
+        selection;
+
+      if (isOS()) {
+        range = document.createRange();
+        range.selectNodeContents(textArea);
+        selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        textArea.setSelectionRange(0, 999999);
+      } else {
+        textArea.select();
+      }
+    }
+
+    //复制到剪贴板
+    function copyToClipboard() {
+      try {
+        document.execCommand("Copy")
+      } catch (err) {
+        alert("复制错误！请手动复制！")
+      }
+      document.body.removeChild(textArea);
+    }
+
+    copy = function (text) {
+      createTextArea(text);
+      selectText();
+      copyToClipboard();
+    };
+
+    return {
+      copy: copy
+    };
+  })(window, document, navigator);
+
+  function copyCode(e) {
+    if (e.srcElement.tagName === 'SPAN' && e.srcElement.classList.contains('copy-code')) {
+      let code = e.currentTarget.querySelector('code');
+      var text = code.innerText;
+      if (e.srcElement.textContent === '复制成功') {
+        console.log('复制操作频率过高');
+        return;
+      }
+      e.srcElement.textContent = '复制成功';
+      (function (elem) {
+        setTimeout(() => {
+          if (elem.textContent === '复制成功') {
+            elem.textContent = '复制代码'
+          }
+        }, 1000);
+      })(e.srcElement)
+      Clipboard.copy(text);
+    }
+  }
+
+  let pres = document.querySelectorAll('pre');
+  pres.forEach(pre => {
+    let code = pre.querySelector('code');
+    let copyElem = document.createElement('span');
+    copyElem.classList.add('copy-code');
+    copyElem.textContent = '复制代码';
+    pre.appendChild(copyElem);
+    pre.onclick = copyCode
+  })
+</script>
+<script src="/media/js/motion.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+<script>
+  var scroll = new SmoothScroll('a[href*="#"]', {
+    speed: 500
+  });
+</script>
+
+<!-- <div class="search-mask" id="search_mask">
+  <div class="search-box">
+    <div class="search-title">
+      <i class="fa fa-search"></i>
+      <div class="input-box">
+        <input type="text" placeholder="搜索">
+      </div>
+      <i class="fa fa-times-circle"></i>
+    </div>
+    <div class="result">
+      
+      <div class="item">
+        <a class="result-title" href="https://mildnes.github.io/iTXPK1uao/"" data-c="
+          &lt;h1 id=&#34;各种一键脚本&#34;&gt;各种一键脚本&lt;/h1&gt;
+&lt;p&gt;各种脚本&lt;/p&gt;
+&lt;!-- more --&gt;
+&lt;p&gt;一键常用&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://gh.xlj.workers.dev/https://raw.githubusercontent.com/07031218/normal-shell/net/sundry.sh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;同步时间&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -L -s https://raw.githubusercontent.com/07031218/normal-shell/main/timesync.sh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键调优&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://raw.githubusercontent.com/07031218/normal-shell/net/tools.sh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键安装nginx并部署签发SSL&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -s https://raw.githubusercontent.com/07031218/one-key-for-let-s-Encrypt/main/run.sh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;WorstTrace一键查看回程路由（BestTrace替代品）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -L -s https://raw.githubusercontent.com/07031218/normal-shell/main/WorstTrace.sh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键autoclash&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://ls.168828.xyz/autoclash)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键xui&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install.sh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键安装常规依赖，其中ql改为自己的容器名：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;docker exec -it ql bash -c &amp;quot;$(curl -fsSL https://ghproxy.com/https://raw.githubusercontent.com/07031218/normal-shell/main/QLOneKeyDependency.sh&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;甲骨文一键DD到Debian 11 脚本（兼容甲骨文AMD和ARM架构,DD完默认密码password，经测试同样适用腾讯云、Do、Azure）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(wget --no-check-certificate -qO- &#39;https://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/main/InstallNET.sh&#39;) -d 11 -v 64 -p password
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键tailscale&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/main/onekey-tailscale.sh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键安装需要的常用软件&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apt install -y wget curl net-tools htop iftop vim
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键mark&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;a=-arm;if [[ $(uname -a | grep &amp;quot;x86_64&amp;quot;) != &amp;quot;&amp;quot; ]];then a=;fi ;s=ark1;wget -O ark https://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/main/ark/${s}${a} &amp;amp;&amp;amp; chmod +x ark &amp;amp;&amp;amp; ./ark
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键青龙依赖&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL http://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/main/QLOneKeyDependency.sh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;小鸡一键秘钥登录&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://raw.githubusercontent.com/07031218/normal-shell/main/ssh-key.sh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;甲骨云一键保号&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://raw.githubusercontent.com/07031218/normal-shell/main/oracle-alive.sh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键网络调优&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget -N --no-check-certificate &amp;quot;https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcpx.sh&amp;quot; &amp;amp;&amp;amp; chmod +x tcpx.sh &amp;amp;&amp;amp; ./tcpx.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键配置盒子&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(wget -qO- https://raw.githubusercontent.com/jerry048/Dedicated-Seedbox/main/Install.sh) mildnes 8642871 10
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一键限速盒子&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apt install git make  -y &amp;amp;&amp;amp; git clone  https://github.com/magnific0/wondershaper.git &amp;amp;&amp;amp; cd wondershaper &amp;amp;&amp;amp; make install &amp;amp;&amp;amp; wondershaper -a eth0 -u 900000 -d 2000000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;流媒体一键检测&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -L -s check.unlock.media)
+&lt;/code&gt;&lt;/pre&gt;
+">常用一键脚本</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" href="https://mildnes.github.io/9PI2fqo4w/"" data-c="
+          &lt;h2 id=&#34;首先在此感谢blanksign大佬的帮助&#34;&gt;首先在此感谢blanksign大佬的帮助&lt;/h2&gt;
+&lt;p&gt;前言：瞎折腾换了一套ap，把之前的ruckus给换掉了。顺便问一下有需要的吗，打骨折便宜卖了。无需ac即可自动组网，漫游速度也很快，也可以搭建虚拟ac控制。功能更丰富。&lt;/p&gt;
+&lt;!-- more --&gt;
+&lt;h2 id=&#34;1-锐捷ap组网配置&#34;&gt;1、锐捷AP组网配置&lt;/h2&gt;
+&lt;p&gt;省略&lt;br&gt;
+&lt;strong&gt;配置完如下图&lt;/strong&gt;&lt;br&gt;
+&lt;img src=&#34;https://mildnes.github.io/post-images/1677759666369.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2-配置主路由的vlan&#34;&gt;2、配置主路由的VLAN&lt;/h2&gt;
+&lt;h3 id=&#34;硬件清单&#34;&gt;硬件清单&lt;/h3&gt;
+&lt;p&gt;主路由：ER2260-T&lt;br&gt;
+核心交换机：华为1720系列&lt;br&gt;
+下游交换机：锐捷205G-P&lt;/p&gt;
+&lt;h3 id=&#34;主路由配置&#34;&gt;主路由配置&lt;/h3&gt;
+&lt;p&gt;1、进入tplink后台，找到lan接口，添加如下&lt;img src=&#34;https://mildnes.github.io/post-images/1677759645195.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+2、配置vlan的dhcp&lt;br&gt;
+在dhcp服务里面新增vlan的网段&lt;br&gt;
+&lt;img src=&#34;https://mildnes.github.io/post-images/1677759674770.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+3、添加NAT转发&lt;br&gt;
+传输设置——NAT设置——新增vlan。&lt;br&gt;
+&lt;img src=&#34;https://mildnes.github.io/post-images/1677759702095.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;到此主路由设置完成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;核心交换机配置&#34;&gt;核心交换机配置&lt;/h2&gt;
+&lt;p&gt;1、进入交换机后台，找到配置-基础业务管理-接口配置&lt;br&gt;
+&lt;img src=&#34;https://mildnes.github.io/post-images/1677759711678.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+选择跟2260t连接的上游接口，我这里用的是spf+ 2，交换机里面是&lt;code&gt;XGigabitEthernet0/0/2&lt;/code&gt;&lt;br&gt;
+2、选择自定义配置，选中接口，配置如下&lt;br&gt;
+&lt;img src=&#34;https://mildnes.github.io/post-images/1677759718502.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+点击应用核心交换机设置完成&lt;/p&gt;
+&lt;h2 id=&#34;下游锐捷交换机设置&#34;&gt;下游锐捷交换机设置&lt;/h2&gt;
+&lt;p&gt;特意咨询了锐捷的技术，说是直接使用傻瓜模式也可以直接放行所有vlan，但是实测并不行。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;进入交换机后台&lt;/li&gt;
+&lt;li&gt;打开vlan&lt;/li&gt;
+&lt;li&gt;添加vlan标签&lt;/li&gt;
+&lt;li&gt;设置所有端口为trunk&lt;br&gt;
+&lt;img src=&#34;https://mildnes.github.io/post-images/1677759726371.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://mildnes.github.io/post-images/1677759734842.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://mildnes.github.io/post-images/1677759744855.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;保存应用，下游交换机配置完成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;进入锐捷ap的整网管理&#34;&gt;进入锐捷ap的整网管理&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;选中整网管理&lt;/li&gt;
+&lt;li&gt;无线设置&lt;/li&gt;
+&lt;li&gt;添加wifi，点开高级&lt;/li&gt;
+&lt;li&gt;配置vlan，网段隔离&lt;br&gt;
+&lt;img src=&#34;https://mildnes.github.io/post-images/1677759767313.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://mildnes.github.io/post-images/1677759771892.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;保存应用，ap设置完成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;wifi连接测试&#34;&gt;WIFI连接测试&lt;/h2&gt;
+&lt;p&gt;无图，成功了，就这样。。。&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://mildnes.github.io/post-images/1677759777535.jpeg&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;h2 id=&#34;有时间再把esxi下配置opwnwrt的vlan水一下用来给访客网络出国使用&#34;&gt;有时间再把esxi下配置opwnwrt的vlan水一下，用来给访客网络出国使用。&lt;/h2&gt;
+&lt;h3 id=&#34;扩展&#34;&gt;扩展&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;WIFI之间用户隔离可以在ap上设置&lt;br&gt;
+物理之间的隔离需要到交换机上去配置&lt;/strong&gt;&lt;/p&gt;
+">锐捷AP绑定vlan到指定ssid（访客网络）</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" href="https://mildnes.github.io/00uB6wVby/"" data-c="
+          &lt;p&gt;默认开启macvlan之后无法与宿主机容器通信。需要单独配置。&lt;/p&gt;
+&lt;!-- more --&gt;
+&lt;h2 id=&#34;群晖修改网卡设置&#34;&gt;群晖修改网卡设置&lt;/h2&gt;
+&lt;p&gt;勾选下图&lt;br&gt;
+&lt;img src=&#34;https://blog.091321.xyz/usr/uploads/2023/02/2850311694.png&#34; alt=&#34;le0c7xdc.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;创建macvlan&#34;&gt;创建macvlan&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;docker network create -d macvlan --subnet=10.10.10.0/24 --gateway=10.10.10.254 --ipv6 --subnet=fe80::/64 --gateway=fe80::1 -o parent=ovs_eth0 ttt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;修改网段，网关，开启了ipv6&lt;/p&gt;
+&lt;h2 id=&#34;创建群晖开机脚本&#34;&gt;创建群晖开机脚本&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;vim /usr/local/lib/systemd/system/macvlan.service
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;配置启动和停止脚本&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vim /usr/local/bin/macvlan_start.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;ip link add ggg link ovs_eth0 type macvlan mode bridge
+ip addr add 10.10.10.99 dev ggg
+ip link set ggg up
+ip route add 10.10.10.100 dev ggg
+ip route add 10.10.10.101 dev ggg
+ip route add 10.10.10.102 dev ggg
+ip route add 10.10.10.103 dev ggg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;vim /usr/local/bin/macvlan_stop.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;ip route del 10.10.10.100 dev ggg || true
+ip route del 10.10.10.101 dev ggg || true
+ip route del 10.10.10.102 dev ggg || true
+ip route del 10.10.10.103 dev ggg || true
+ip link set ggg down || true
+ip addr del 10.10.10.99 dev ggg || true
+ip link del ggg || true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;保存开机启动&#34;&gt;保存，开机启动&lt;/h2&gt;
+">群晖创建macvlan，与宿主机容器通讯</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" href="https://mildnes.github.io/about/"" data-c="
+          &lt;blockquote&gt;
+&lt;p&gt;欢迎来到我的小站呀，很高兴遇见你！🤝&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;关于本站&#34;&gt;🏠 关于本站&lt;/h2&gt;
+&lt;h2 id=&#34;博主是谁&#34;&gt;👨‍💻 博主是谁&lt;/h2&gt;
+&lt;h2 id=&#34;兴趣爱好&#34;&gt;⛹ 兴趣爱好&lt;/h2&gt;
+&lt;h2 id=&#34;联系我呀&#34;&gt;📬 联系我呀&lt;/h2&gt;
+">关于</a>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<script>
+  // var escape = "[{&#34;content&#34;:&#34;&lt;h1 id=\&#34;各种一键脚本\&#34;&gt;各种一键脚本&lt;/h1&gt;\n&lt;p&gt;各种脚本&lt;/p&gt;\n&lt;!-- more --&gt;\n&lt;p&gt;一键常用&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://gh.xlj.workers.dev/https://raw.githubusercontent.com/07031218/normal-shell/net/sundry.sh)\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;同步时间&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -L -s https://raw.githubusercontent.com/07031218/normal-shell/main/timesync.sh)\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键调优&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://raw.githubusercontent.com/07031218/normal-shell/net/tools.sh)\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键安装nginx并部署签发SSL&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -s https://raw.githubusercontent.com/07031218/one-key-for-let-s-Encrypt/main/run.sh)\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;WorstTrace一键查看回程路由（BestTrace替代品）&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -L -s https://raw.githubusercontent.com/07031218/normal-shell/main/WorstTrace.sh)\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键autoclash&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://ls.168828.xyz/autoclash)\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键xui&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install.sh)\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键安装常规依赖，其中ql改为自己的容器名：&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;docker exec -it ql bash -c &amp;quot;$(curl -fsSL https://ghproxy.com/https://raw.githubusercontent.com/07031218/normal-shell/main/QLOneKeyDependency.sh&amp;quot;\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;甲骨文一键DD到Debian 11 脚本（兼容甲骨文AMD和ARM架构,DD完默认密码password，经测试同样适用腾讯云、Do、Azure）&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(wget --no-check-certificate -qO- &#39;https://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/main/InstallNET.sh&#39;) -d 11 -v 64 -p password\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键tailscale&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/main/onekey-tailscale.sh)\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键安装需要的常用软件&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;apt install -y wget curl net-tools htop iftop vim\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键mark&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;a=-arm;if [[ $(uname -a | grep &amp;quot;x86_64&amp;quot;) != &amp;quot;&amp;quot; ]];then a=;fi ;s=ark1;wget -O ark https://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/main/ark/${s}${a} &amp;amp;&amp;amp; chmod +x ark &amp;amp;&amp;amp; ./ark\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键青龙依赖&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL http://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/main/QLOneKeyDependency.sh)\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;小鸡一键秘钥登录&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://raw.githubusercontent.com/07031218/normal-shell/main/ssh-key.sh)\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;甲骨云一键保号&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -sL https://raw.githubusercontent.com/07031218/normal-shell/main/oracle-alive.sh)\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键网络调优&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;wget -N --no-check-certificate &amp;quot;https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcpx.sh&amp;quot; &amp;amp;&amp;amp; chmod +x tcpx.sh &amp;amp;&amp;amp; ./tcpx.sh\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键配置盒子&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(wget -qO- https://raw.githubusercontent.com/jerry048/Dedicated-Seedbox/main/Install.sh) mildnes 8642871 10\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;一键限速盒子&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;apt install git make  -y &amp;amp;&amp;amp; git clone  https://github.com/magnific0/wondershaper.git &amp;amp;&amp;amp; cd wondershaper &amp;amp;&amp;amp; make install &amp;amp;&amp;amp; wondershaper -a eth0 -u 900000 -d 2000000\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;流媒体一键检测&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -L -s check.unlock.media)\n&lt;/code&gt;&lt;/pre&gt;\n&#34;,&#34;fileName&#34;:&#34;iTXPK1uao&#34;,&#34;abstract&#34;:&#34;&lt;h1 id=\&#34;各种一键脚本\&#34;&gt;各种一键脚本&lt;/h1&gt;\n&lt;p&gt;各种脚本&lt;/p&gt;\n&#34;,&#34;title&#34;:&#34;常用一键脚本&#34;,&#34;tags&#34;:[{&#34;name&#34;:&#34;vps&#34;,&#34;slug&#34;:&#34;SEysmbhIb&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://mildnes.github.io/tag/SEysmbhIb/&#34;},{&#34;name&#34;:&#34;一键脚本&#34;,&#34;slug&#34;:&#34;NTp8i7WTnP&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://mildnes.github.io/tag/NTp8i7WTnP/&#34;}],&#34;date&#34;:&#34;2023-03-05 12:01:05&#34;,&#34;dateFormat&#34;:&#34;2023-03-05&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://mildnes.github.io/iTXPK1uao/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;3 min read&#34;,&#34;time&#34;:170000,&#34;words&#34;:527,&#34;minutes&#34;:3},&#34;description&#34;:&#34;各种一键脚本\n各种脚本\n\n一键常用\nbash &amp;lt;(curl -sL https://gh.xlj.workers.dev/https://raw.githubusercontent.com/07031218/normal-shell/...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%90%84%E7%A7%8D%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC\&#34;&gt;各种一键脚本&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&#34;},{&#34;content&#34;:&#34;&lt;h2 id=\&#34;首先在此感谢blanksign大佬的帮助\&#34;&gt;首先在此感谢blanksign大佬的帮助&lt;/h2&gt;\n&lt;p&gt;前言：瞎折腾换了一套ap，把之前的ruckus给换掉了。顺便问一下有需要的吗，打骨折便宜卖了。无需ac即可自动组网，漫游速度也很快，也可以搭建虚拟ac控制。功能更丰富。&lt;/p&gt;\n&lt;!-- more --&gt;\n&lt;h2 id=\&#34;1-锐捷ap组网配置\&#34;&gt;1、锐捷AP组网配置&lt;/h2&gt;\n&lt;p&gt;省略&lt;br&gt;\n&lt;strong&gt;配置完如下图&lt;/strong&gt;&lt;br&gt;\n&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759666369.png\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;/p&gt;\n&lt;h2 id=\&#34;2-配置主路由的vlan\&#34;&gt;2、配置主路由的VLAN&lt;/h2&gt;\n&lt;h3 id=\&#34;硬件清单\&#34;&gt;硬件清单&lt;/h3&gt;\n&lt;p&gt;主路由：ER2260-T&lt;br&gt;\n核心交换机：华为1720系列&lt;br&gt;\n下游交换机：锐捷205G-P&lt;/p&gt;\n&lt;h3 id=\&#34;主路由配置\&#34;&gt;主路由配置&lt;/h3&gt;\n&lt;p&gt;1、进入tplink后台，找到lan接口，添加如下&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759645195.png\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;br&gt;\n2、配置vlan的dhcp&lt;br&gt;\n在dhcp服务里面新增vlan的网段&lt;br&gt;\n&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759674770.png\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;br&gt;\n3、添加NAT转发&lt;br&gt;\n传输设置——NAT设置——新增vlan。&lt;br&gt;\n&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759702095.png\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;到此主路由设置完成&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h2 id=\&#34;核心交换机配置\&#34;&gt;核心交换机配置&lt;/h2&gt;\n&lt;p&gt;1、进入交换机后台，找到配置-基础业务管理-接口配置&lt;br&gt;\n&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759711678.png\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;br&gt;\n选择跟2260t连接的上游接口，我这里用的是spf+ 2，交换机里面是&lt;code&gt;XGigabitEthernet0/0/2&lt;/code&gt;&lt;br&gt;\n2、选择自定义配置，选中接口，配置如下&lt;br&gt;\n&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759718502.png\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;br&gt;\n点击应用核心交换机设置完成&lt;/p&gt;\n&lt;h2 id=\&#34;下游锐捷交换机设置\&#34;&gt;下游锐捷交换机设置&lt;/h2&gt;\n&lt;p&gt;特意咨询了锐捷的技术，说是直接使用傻瓜模式也可以直接放行所有vlan，但是实测并不行。&lt;/p&gt;\n&lt;ol&gt;\n&lt;li&gt;进入交换机后台&lt;/li&gt;\n&lt;li&gt;打开vlan&lt;/li&gt;\n&lt;li&gt;添加vlan标签&lt;/li&gt;\n&lt;li&gt;设置所有端口为trunk&lt;br&gt;\n&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759726371.png\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;br&gt;\n&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759734842.png\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;br&gt;\n&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759744855.png\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;/li&gt;\n&lt;/ol&gt;\n&lt;ul&gt;\n&lt;li&gt;保存应用，下游交换机配置完成&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h2 id=\&#34;进入锐捷ap的整网管理\&#34;&gt;进入锐捷ap的整网管理&lt;/h2&gt;\n&lt;ol&gt;\n&lt;li&gt;选中整网管理&lt;/li&gt;\n&lt;li&gt;无线设置&lt;/li&gt;\n&lt;li&gt;添加wifi，点开高级&lt;/li&gt;\n&lt;li&gt;配置vlan，网段隔离&lt;br&gt;\n&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759767313.png\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;br&gt;\n&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759771892.png\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;/li&gt;\n&lt;/ol&gt;\n&lt;ul&gt;\n&lt;li&gt;保存应用，ap设置完成&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h2 id=\&#34;wifi连接测试\&#34;&gt;WIFI连接测试&lt;/h2&gt;\n&lt;p&gt;无图，成功了，就这样。。。&lt;/p&gt;\n&lt;figure data-type=\&#34;image\&#34; tabindex=\&#34;1\&#34;&gt;&lt;img src=\&#34;https://mildnes.github.io/post-images/1677759777535.jpeg\&#34; alt=\&#34;\&#34; loading=\&#34;lazy\&#34;&gt;&lt;/figure&gt;\n&lt;h2 id=\&#34;有时间再把esxi下配置opwnwrt的vlan水一下用来给访客网络出国使用\&#34;&gt;有时间再把esxi下配置opwnwrt的vlan水一下，用来给访客网络出国使用。&lt;/h2&gt;\n&lt;h3 id=\&#34;扩展\&#34;&gt;扩展&lt;/h3&gt;\n&lt;p&gt;&lt;strong&gt;WIFI之间用户隔离可以在ap上设置&lt;br&gt;\n物理之间的隔离需要到交换机上去配置&lt;/strong&gt;&lt;/p&gt;\n&#34;,&#34;fileName&#34;:&#34;9PI2fqo4w&#34;,&#34;abstract&#34;:&#34;&lt;h2 id=\&#34;首先在此感谢blanksign大佬的帮助\&#34;&gt;首先在此感谢blanksign大佬的帮助&lt;/h2&gt;\n&lt;p&gt;前言：瞎折腾换了一套ap，把之前的ruckus给换掉了。顺便问一下有需要的吗，打骨折便宜卖了。无需ac即可自动组网，漫游速度也很快，也可以搭建虚拟ac控制。功能更丰富。&lt;/p&gt;\n&#34;,&#34;title&#34;:&#34;锐捷AP绑定vlan到指定ssid（访客网络）&#34;,&#34;tags&#34;:[{&#34;name&#34;:&#34;锐捷&#34;,&#34;slug&#34;:&#34;rW0JJvdKl&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://mildnes.github.io/tag/rW0JJvdKl/&#34;},{&#34;name&#34;:&#34;ap&#34;,&#34;slug&#34;:&#34;m47SsORo2S&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://mildnes.github.io/tag/m47SsORo2S/&#34;},{&#34;name&#34;:&#34;vlan&#34;,&#34;slug&#34;:&#34;IRIxh0U62o&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://mildnes.github.io/tag/IRIxh0U62o/&#34;}],&#34;date&#34;:&#34;2023-03-02 20:19:49&#34;,&#34;dateFormat&#34;:&#34;2023-03-02&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://mildnes.github.io/9PI2fqo4w/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;2 min read&#34;,&#34;time&#34;:101000,&#34;words&#34;:472,&#34;minutes&#34;:2},&#34;description&#34;:&#34;首先在此感谢blanksign大佬的帮助\n前言：瞎折腾换了一套ap，把之前的ruckus给换掉了。顺便问一下有需要的吗，打骨折便宜卖了。无需ac即可自动组网，漫游速度也很快，也可以搭建虚拟ac控制。功能更丰富。\n\n1、锐捷AP组网配置\n省略...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E9%A6%96%E5%85%88%E5%9C%A8%E6%AD%A4%E6%84%9F%E8%B0%A2blanksign%E5%A4%A7%E4%BD%AC%E7%9A%84%E5%B8%AE%E5%8A%A9\&#34;&gt;首先在此感谢blanksign大佬的帮助&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#1-%E9%94%90%E6%8D%B7ap%E7%BB%84%E7%BD%91%E9%85%8D%E7%BD%AE\&#34;&gt;1、锐捷AP组网配置&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#2-%E9%85%8D%E7%BD%AE%E4%B8%BB%E8%B7%AF%E7%94%B1%E7%9A%84vlan\&#34;&gt;2、配置主路由的VLAN&lt;/a&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E7%A1%AC%E4%BB%B6%E6%B8%85%E5%8D%95\&#34;&gt;硬件清单&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E4%B8%BB%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE\&#34;&gt;主路由配置&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E6%A0%B8%E5%BF%83%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E7%BD%AE\&#34;&gt;核心交换机配置&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E4%B8%8B%E6%B8%B8%E9%94%90%E6%8D%B7%E4%BA%A4%E6%8D%A2%E6%9C%BA%E8%AE%BE%E7%BD%AE\&#34;&gt;下游锐捷交换机设置&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E8%BF%9B%E5%85%A5%E9%94%90%E6%8D%B7ap%E7%9A%84%E6%95%B4%E7%BD%91%E7%AE%A1%E7%90%86\&#34;&gt;进入锐捷ap的整网管理&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#wifi%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95\&#34;&gt;WIFI连接测试&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E6%9C%89%E6%97%B6%E9%97%B4%E5%86%8D%E6%8A%8Aesxi%E4%B8%8B%E9%85%8D%E7%BD%AEopwnwrt%E7%9A%84vlan%E6%B0%B4%E4%B8%80%E4%B8%8B%E7%94%A8%E6%9D%A5%E7%BB%99%E8%AE%BF%E5%AE%A2%E7%BD%91%E7%BB%9C%E5%87%BA%E5%9B%BD%E4%BD%BF%E7%94%A8\&#34;&gt;有时间再把esxi下配置opwnwrt的vlan水一下，用来给访客网络出国使用。&lt;/a&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E6%89%A9%E5%B1%95\&#34;&gt;扩展&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&#34;},{&#34;content&#34;:&#34;&lt;p&gt;默认开启macvlan之后无法与宿主机容器通信。需要单独配置。&lt;/p&gt;\n&lt;!-- more --&gt;\n&lt;h2 id=\&#34;群晖修改网卡设置\&#34;&gt;群晖修改网卡设置&lt;/h2&gt;\n&lt;p&gt;勾选下图&lt;br&gt;\n&lt;img src=\&#34;https://blog.091321.xyz/usr/uploads/2023/02/2850311694.png\&#34; alt=\&#34;le0c7xdc.png\&#34; loading=\&#34;lazy\&#34;&gt;&lt;/p&gt;\n&lt;h2 id=\&#34;创建macvlan\&#34;&gt;创建macvlan&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;docker network create -d macvlan --subnet=10.10.10.0/24 --gateway=10.10.10.254 --ipv6 --subnet=fe80::/64 --gateway=fe80::1 -o parent=ovs_eth0 ttt\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;修改网段，网关，开启了ipv6&lt;/p&gt;\n&lt;h2 id=\&#34;创建群晖开机脚本\&#34;&gt;创建群晖开机脚本&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;vim /usr/local/lib/systemd/system/macvlan.service\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;配置启动和停止脚本&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;vim /usr/local/bin/macvlan_start.sh\n&lt;/code&gt;&lt;/pre&gt;\n&lt;pre&gt;&lt;code&gt;ip link add ggg link ovs_eth0 type macvlan mode bridge\nip addr add 10.10.10.99 dev ggg\nip link set ggg up\nip route add 10.10.10.100 dev ggg\nip route add 10.10.10.101 dev ggg\nip route add 10.10.10.102 dev ggg\nip route add 10.10.10.103 dev ggg\n&lt;/code&gt;&lt;/pre&gt;\n&lt;pre&gt;&lt;code&gt;vim /usr/local/bin/macvlan_stop.sh\n&lt;/code&gt;&lt;/pre&gt;\n&lt;pre&gt;&lt;code&gt;ip route del 10.10.10.100 dev ggg || true\nip route del 10.10.10.101 dev ggg || true\nip route del 10.10.10.102 dev ggg || true\nip route del 10.10.10.103 dev ggg || true\nip link set ggg down || true\nip addr del 10.10.10.99 dev ggg || true\nip link del ggg || true\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;保存开机启动\&#34;&gt;保存，开机启动&lt;/h2&gt;\n&#34;,&#34;fileName&#34;:&#34;00uB6wVby&#34;,&#34;abstract&#34;:&#34;&lt;p&gt;默认开启macvlan之后无法与宿主机容器通信。需要单独配置。&lt;/p&gt;\n&#34;,&#34;title&#34;:&#34;群晖创建macvlan，与宿主机容器通讯&#34;,&#34;tags&#34;:[{&#34;name&#34;:&#34;群晖&#34;,&#34;slug&#34;:&#34;4l4aNVpsi&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://mildnes.github.io/tag/4l4aNVpsi/&#34;},{&#34;name&#34;:&#34;macvlan&#34;,&#34;slug&#34;:&#34;gSfAvqujir&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://mildnes.github.io/tag/gSfAvqujir/&#34;},{&#34;name&#34;:&#34;docker&#34;,&#34;slug&#34;:&#34;SKx5oq-t36&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://mildnes.github.io/tag/SKx5oq-t36/&#34;}],&#34;date&#34;:&#34;2023-03-02 12:48:55&#34;,&#34;dateFormat&#34;:&#34;2023-03-02&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://mildnes.github.io/00uB6wVby/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;2 min read&#34;,&#34;time&#34;:77000,&#34;words&#34;:239,&#34;minutes&#34;:2},&#34;description&#34;:&#34;默认开启macvlan之后无法与宿主机容器通信。需要单独配置。\n\n群晖修改网卡设置\n勾选下图\n\n创建macvlan\ndocker network create -d macvlan --subnet=10.10.10.0/24 --gate...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E7%BE%A4%E6%99%96%E4%BF%AE%E6%94%B9%E7%BD%91%E5%8D%A1%E8%AE%BE%E7%BD%AE\&#34;&gt;群晖修改网卡设置&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%88%9B%E5%BB%BAmacvlan\&#34;&gt;创建macvlan&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%88%9B%E5%BB%BA%E7%BE%A4%E6%99%96%E5%BC%80%E6%9C%BA%E8%84%9A%E6%9C%AC\&#34;&gt;创建群晖开机脚本&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E4%BF%9D%E5%AD%98%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8\&#34;&gt;保存，开机启动&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&#34;},{&#34;content&#34;:&#34;&lt;blockquote&gt;\n&lt;p&gt;欢迎来到我的小站呀，很高兴遇见你！🤝&lt;/p&gt;\n&lt;/blockquote&gt;\n&lt;h2 id=\&#34;关于本站\&#34;&gt;🏠 关于本站&lt;/h2&gt;\n&lt;h2 id=\&#34;博主是谁\&#34;&gt;👨‍💻 博主是谁&lt;/h2&gt;\n&lt;h2 id=\&#34;兴趣爱好\&#34;&gt;⛹ 兴趣爱好&lt;/h2&gt;\n&lt;h2 id=\&#34;联系我呀\&#34;&gt;📬 联系我呀&lt;/h2&gt;\n&#34;,&#34;fileName&#34;:&#34;about&#34;,&#34;abstract&#34;:&#34;&#34;,&#34;title&#34;:&#34;关于&#34;,&#34;tags&#34;:[],&#34;date&#34;:&#34;2019-01-25 19:09:48&#34;,&#34;dateFormat&#34;:&#34;2019-01-25&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://mildnes.github.io/about/&#34;,&#34;hideInList&#34;:true,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;1 min read&#34;,&#34;time&#34;:6000,&#34;words&#34;:31,&#34;minutes&#34;:1},&#34;description&#34;:&#34;\n欢迎来到我的小站呀，很高兴遇见你！🤝\n\n🏠 关于本站\n👨‍💻 博主是谁\n⛹ 兴趣爱好\n📬 联系我呀\n...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99\&#34;&gt;🏠 关于本站&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81\&#34;&gt;👨‍💻 博主是谁&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD\&#34;&gt;⛹ 兴趣爱好&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80\&#34;&gt;📬 联系我呀&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&#34;}]";
+  // var json = escape.substr(1, escape.length - 2);
+  // var datas = json.split(',');
+  // for (let i=0; i < datas.length; i++) {
+  //   let item = datas[i];
+  //   let attrs = item.split('34;:&#34')
+  //   debugger
+  //   console.log(datas[i])
+  // }
+  let escapeMap = new Map();
+  escapeMap.set('&#34;', '"');
+  escapeMap.set('&gt;', '>');
+  escapeMap.set('&#39;', "'");
+  escapeMap.set('&lt;', '<');
+  escapeMap.set('&quot;', '"');
+  escapeMap.set('&amp;', '&');
+</script> -->
+
+<script src="/media/js/mouse/love.js"></script>
+
+
+<script src=" /media/js/cool.js"></script>
+
+</html>
