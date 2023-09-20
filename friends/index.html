@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="keywords" content="Gridea静态个人博客">
+<meta name="description" content="温故而知新">
+<meta name="theme-color" content="#000">
+<title>Mildnes Home</title>
+<link rel="shortcut icon" href="/favicon.ico?v=1695211728291">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="stylesheet" href="/media/css/pisces.css">
+
+<link rel="stylesheet" href="/media/fonts/font-awesome.css">
+<link
+  href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Rosario:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext"
+  rel="stylesheet" type="text/css">
+
+<link href="/media/hljs/styles/androidstudio.css"
+  rel="stylesheet">
+
+<script src="/media/hljs/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.0/velocity.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.0/velocity.ui.min.js"></script>
+
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+</head>
+
+<body>
+  <div class="head-top-line"></div>
+  <div class="header-box">
+    
+<div class="pisces">
+  <header class="header  ">
+    <div class="blog-header box-shadow-wrapper bg-color " id="header">
+      <div class="nav-toggle" id="nav_toggle">
+        <div class="toggle-box">
+          <div class="line line-top"></div>
+          <div class="line line-center"></div>
+          <div class="line line-bottom"></div>
+        </div>
+      </div>
+      <div class="site-meta">       
+        <div class="site-title">
+          
+            <a href="/" class="brand">
+              <span>Mildnes Home</span>
+            </a>  
+          
+        </div>
+        
+          <p class="subtitle">精于心，简于形</p>
+        
+      </div>
+      <nav class="site-nav" id="site_nav">
+        <ul id="nav_ul">
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/" target="_self">
+                  <i class="fa fa-home"></i> 首页
+                </a>
+              
+            </li>
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/archives/" target="_self">
+                  <i class="fa fa-archive"></i> 归档
+                </a>
+              
+            </li>
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/tags/" target="_self">
+                  <i class="fa fa-tags"></i> 标签
+                </a>
+              
+            </li>
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/post/about/" target="_self">
+                  <i class="fa fa-user"></i> 关于
+                </a>
+              
+            </li>
+          
+          
+            
+              <li class="nav-item ">
+                <a href="/friends/" target="_self">
+                  
+                    <i class="fa fa-address-book"></i> 友情链接
+                  
+                </a>
+              </li>
+            
+          
+        </ul>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<script type="text/javascript"> 
+ 
+  let showNav = true;
+
+  let navToggle = document.querySelector('#nav_toggle'),
+  siteNav = document.querySelector('#site_nav');
+  
+  function navClick() {
+    let sideBar = document.querySelector('.sidebar');
+    let navUl = document.querySelector('#nav_ul');
+    navToggle.classList.toggle('nav-toggle-active');
+    siteNav.classList.toggle('nav-menu-active');
+    if (siteNav.classList.contains('nav-menu-active')) {
+      siteNav.style = "height: " + (navUl.children.length * 42) +"px !important";
+    } else {
+      siteNav.style = "";
+    }
+  }
+
+  navToggle.addEventListener('click',navClick);  
+</script>
+  </div>
+  <div class="main-continer">
+    
+    <div
+      class="section-layout pisces ">
+      <div class="section-layout-wrapper">
+        <div id="sidebarMeta" class="sidebar">
+    
+<div class="sidebar-wrapper box-shadow-wrapper bg-color">
+  <div class="sidebar-item">
+    <img class="site-author-image right-motion" src="/images/avatar.png"/>
+    <p class="site-author-name">Mildnes</p>
+    
+  </div>
+  <div class="sidebar-item side-item-stat right-motion">
+    <div class="sidebar-item-box">
+      <a href="/archives/">
+        
+        <span class="site-item-stat-count">2</span>
+        <span class="site-item-stat-name">文章</span>
+      </a>
+    </div>
+    <div class="sidebar-item-box">
+      <a href="">
+        <span class="site-item-stat-count">1</span>
+        <span class="site-item-stat-name">分类</span>
+      </a>
+    </div>
+    <div class="sidebar-item-box">
+      <a href="/tags/">
+        <span class="site-item-stat-count">1</span>
+        <span class="site-item-stat-name">标签</span>
+      </a>
+    </div>
+  </div>
+  
+    
+      <div class="sidebar-item" style="border-top: 1px dotted #ccc; margin-top: 10px;">
+      </div>
+    
+  
+  
+
+
+</div>
+</div>
+<script>
+  let sidebarMeta = document.querySelector('#sidebarMeta');
+  let scheme = 'pisces';
+  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
+  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
+    document.addEventListener('scroll', function(e) {
+      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
+        sidebarWrapper.classList.add('home-sidebar-fixed')
+      } else {
+        sidebarWrapper.classList.remove('home-sidebar-fixed')
+      }
+    });
+  }
+  </script>
+        <div class="section-box pisces box-shadow-wrapper">
+          <section class="friends-section bg-color slide-down-in">
+            <div class="firends-box">
+              <h1 class="firends-title" itemprop="name headline">友情链接</h1>
+              
+              
+              
+            </div>
+            <hr>
+            <div style="text-align:center">
+              <span class="with-love">
+                <i class="fa fa-heart"></i>
+              </span>
+              留言添加友链
+              <span class="with-love">
+                <i class="fa fa-heart"></i>
+              </span>
+            </div>
+            <hr>
+            <div class="friends-note">
+              <p><strong>友链格式：</strong></p>
+              <ul>
+                <li>网站名称：枫糖</li>
+                <li>网站地址：<a href="https://blog.maplesugar.space" data-pjax-state="">https://blog.maplesugar.space</a>
+                </li>
+                <li> 网站描述：From rookie to master</li>
+                <li> 网站 Logo / 头像：<a href="https://blog.maplesugar.space/uploads/maple-leaf-avatar.jpg"
+                    data-pjax-state="">https://blog.maplesugar.space/uploads/maple-leaf-avatar.jpg</a></li>
+              </ul>
+            </div>
+            
+  
+
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="footer-box">
+  <footer class="footer">
+    <div class="copyright">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | © 2019-2020 Theme By <a href="https://github.com/hsxyhao/gridea-theme-next" target="_blank">HsxyHao</a>
+    </div>
+    <div class="poweredby">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+  </footer>
+  
+  
+  <div class="pisces back-to-top" id="back_to_top">
+    <i class="fa fa-arrow-up"></i>
+    
+    <span class="scrollpercent">
+      <span id="back_to_top_text">0</span>%
+    </span>
+    
+  </div>
+  
+  
+  
+</div>
+<script>
+
+  let sideBarOpen = 'sidebar-open';
+  let body = document.body;
+  let back2Top = document.querySelector('#back_to_top'),
+  back2TopText = document.querySelector('#back_to_top_text'),
+  drawerBox = document.querySelector('#drawer_box'),
+  rightSideBar = document.querySelector('.sidebar'),
+  viewport = document.querySelector('body');
+
+  function scrollAnimation(currentY, targetY) {
+   
+    let needScrollTop = targetY - currentY
+    let _currentY = currentY
+    setTimeout(() => {
+      const dist = Math.ceil(needScrollTop / 10)
+      _currentY += dist
+      window.scrollTo(_currentY, currentY)
+      if (needScrollTop > 10 || needScrollTop < -10) {
+        scrollAnimation(_currentY, targetY)
+      } else {
+        window.scrollTo(_currentY, targetY)
+      }
+    }, 1)
+  }
+
+  back2Top.addEventListener("click", function(e) {
+    scrollAnimation(document.scrollingElement.scrollTop, 0);
+    e.stopPropagation();
+    return false;
+  });
+  
+  window.addEventListener('scroll', function(e) {
+    let percent = document.scrollingElement.scrollTop / (document.scrollingElement.scrollHeight - document.scrollingElement.clientHeight) * 100;
+    if (percent > 1 && !back2Top.classList.contains('back-top-active')) {
+      back2Top.classList.add('back-top-active');
+    }
+    if (percent == 0) {
+      back2Top.classList.remove('back-top-active');
+    }
+    if (back2TopText) {
+      back2TopText.textContent = Math.floor(percent);
+    }
+  });
+
+  
+  let hasCacu = false;
+  window.onresize = function() {
+    if (window.width > 991) {
+      calcuHeight();
+    } else {
+      hasCacu = false;
+    }
+  }
+
+  function calcuHeight() {
+    // 动态调整站点概览高度
+    if (!hasCacu && back2Top.classList.contains('pisces') || back2Top.classList.contains('gemini')) {
+      let sideBar = document.querySelector('.sidebar');
+      let navUl = document.querySelector('#site_nav');
+      sideBar.style = 'margin-top:' + (navUl.offsetHeight + navUl.offsetTop + 15) + 'px;';
+      hasCacu = true;
+    }
+  }
+  calcuHeight();
+  
+  let open = false, MOTION_TIME = 300, RIGHT_MOVE_DIS = '320px';
+
+  if (drawerBox) {
+    let rightMotions = document.querySelectorAll('.right-motion');
+    let right = drawerBox.classList.contains('right');
+
+    let transitionDir = right ? "transition.slideRightIn" : "transition.slideLeftIn";
+
+    let openProp, closeProp;
+    if (right) {
+      openProp = {
+        paddingRight: RIGHT_MOVE_DIS 
+      };
+      closeProp = {
+        paddingRight: '0px'
+      };
+    } else {
+      openProp = {
+        paddingLeft: RIGHT_MOVE_DIS 
+      };
+      closeProp = {
+        paddingLeft: '0px'
+      };
+    }
+
+    drawerBox.onclick = function() {
+      open = !open;
+      window.Velocity(rightSideBar, 'stop');
+      window.Velocity(viewport, 'stop');
+      window.Velocity(rightMotions, 'stop');
+      if (open) {
+        window.Velocity(rightSideBar, {
+          width: RIGHT_MOVE_DIS
+        }, {
+          duration: MOTION_TIME,
+          begin: function() {
+            window.Velocity(rightMotions, transitionDir,{ });
+          }
+        })
+        window.Velocity(viewport, openProp,{
+          duration: MOTION_TIME
+        });
+      } else {
+        window.Velocity(rightSideBar, {
+          width: '0px'
+        }, {
+          duration: MOTION_TIME,
+          begin: function() {
+            window.Velocity(rightMotions, {
+              opacity: 0
+            });
+          }
+        })
+        window.Velocity(viewport, closeProp ,{
+          duration: MOTION_TIME
+        });
+      }
+      for (let i = 0; i < drawerBox.children.length; i++) {
+        drawerBox.children[i].classList.toggle('muse-line');
+      }
+      drawerBox.classList.toggle(sideBarOpen);
+    }
+  }
+
+  // 链接跳转
+  let newWindow = 'false'
+  if (newWindow === 'true') {
+    let links = document.querySelectorAll('.post-body a')
+    links.forEach(item => {
+      if (!item.classList.contains('btn')) {
+        item.setAttribute("target","_blank");
+      }
+    })
+  }
+  // 代码高亮
+  hljs.initHighlightingOnLoad();
+
+</script>
+  </div>
+</body>
+<input hidden id="copy" />
+<script>
+  //拿来主义(真香)^_^，Clipboard 实现摘自掘金 https://juejin.im/post/5aefeb6e6fb9a07aa43c20af
+  window.Clipboard = (function (window, document, navigator) {
+    var textArea,
+      copy;
+
+    // 判断是不是ios端
+    function isOS() {
+      return navigator.userAgent.match(/ipad|iphone/i);
+    }
+    //创建文本元素
+    function createTextArea(text) {
+      textArea = document.createElement('textArea');
+      textArea.value = text;
+      textArea.style.width = 0;
+      textArea.style.height = 0;
+      textArea.clientHeight = 0;
+      textArea.clientWidth = 0;
+      document.body.appendChild(textArea);
+    }
+    //选择内容
+    function selectText() {
+      var range,
+        selection;
+
+      if (isOS()) {
+        range = document.createRange();
+        range.selectNodeContents(textArea);
+        selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        textArea.setSelectionRange(0, 999999);
+      } else {
+        textArea.select();
+      }
+    }
+
+    //复制到剪贴板
+    function copyToClipboard() {
+      try {
+        document.execCommand("Copy")
+      } catch (err) {
+        alert("复制错误！请手动复制！")
+      }
+      document.body.removeChild(textArea);
+    }
+
+    copy = function (text) {
+      createTextArea(text);
+      selectText();
+      copyToClipboard();
+    };
+
+    return {
+      copy: copy
+    };
+  })(window, document, navigator);
+
+  function copyCode(e) {
+    if (e.srcElement.tagName === 'SPAN' && e.srcElement.classList.contains('copy-code')) {
+      let code = e.currentTarget.querySelector('code');
+      var text = code.innerText;
+      if (e.srcElement.textContent === '复制成功') {
+        console.log('复制操作频率过高');
+        return;
+      }
+      e.srcElement.textContent = '复制成功';
+      (function (elem) {
+        setTimeout(() => {
+          if (elem.textContent === '复制成功') {
+            elem.textContent = '复制代码'
+          }
+        }, 1000);
+      })(e.srcElement)
+      Clipboard.copy(text);
+    }
+  }
+
+  let pres = document.querySelectorAll('pre');
+  pres.forEach(pre => {
+    let code = pre.querySelector('code');
+    let copyElem = document.createElement('span');
+    copyElem.classList.add('copy-code');
+    copyElem.textContent = '复制代码';
+    pre.appendChild(copyElem);
+    pre.onclick = copyCode
+  })
+</script>
+<script src="/media/js/motion.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+<script>
+  var scroll = new SmoothScroll('a[href*="#"]', {
+    speed: 500
+  });
+</script>
+
+<!-- <div class="search-mask" id="search_mask">
+  <div class="search-box">
+    <div class="search-title">
+      <i class="fa fa-search"></i>
+      <div class="input-box">
+        <input type="text" placeholder="搜索">
+      </div>
+      <i class="fa fa-times-circle"></i>
+    </div>
+    <div class="result">
+      
+      <div class="item">
+        <a class="result-title" href="https://blog.usxx.xyz/post/debian-an-zhuang-daed-jie-he-mosdns/"" data-c="
+          &lt;h1 id=&#34;1查看版本号和内核&#34;&gt;1.查看版本号和内核&lt;/h1&gt;
+&lt;h2 id=&#34;查看-debian-版本&#34;&gt;查看 Debian 版本：&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;cat /etc/debian_version
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;查看当前正在使用的内核版本&#34;&gt;查看当前正在使用的内核版本：&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;uname -r
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;2升级内核&#34;&gt;2.升级内核&lt;/h1&gt;
+&lt;p&gt;运行命令，搜索内核&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apt search linux-image
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;安装内核&#34;&gt;安装内核&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;# 随便拿一个版本来写
+apt install linux-image-5.10.0-0.bpo.9-amd64
+# 可选,但有编译驱动需求则需要
+apt install linux-header-5.10.0-0.bpo.9-amd64
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;更新grub重启&#34;&gt;更新grub，重启&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;update-grub
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;删除旧内核-最少保证有一个内核否则系统挂了&#34;&gt;删除旧内核 最少保证有一个内核,否则系统挂了&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;dpkg --list | grep linux-image
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;卸载内核&#34;&gt;卸载内核&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;apt purge linux-image-4.19.0-14-amd64
+# 对应的 header 也能卸载
+apt purge linux-header-4.19.0-14-amd64
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;更新grub&#34;&gt;更新grub。&lt;/h2&gt;
+&lt;h1 id=&#34;3安装dead&#34;&gt;3.安装Dead&lt;/h1&gt;
+&lt;p&gt;下面代码一次运行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# 下载
+wget -P /tmp https://github.com/daeuniverse/daed/releases/latest/download/installer-daed-linux-$(arch).deb
+
+# 安装
+dpkg -i /tmp/installer-daed-linux-$(arch).deb
+rm /tmp/installer-daed-linux-$(arch).deb
+
+# Start daed
+systemctl start daed
+
+# enable daed start automatically
+systemctl enable daed
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;4安装easymosdns&#34;&gt;4.安装easymosdns&lt;/h1&gt;
+&lt;h2 id=&#34;下载mosdns和easymosdns文件&#34;&gt;下载mosdns和easymosdns文件&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;wget https://github.com/IrineSistiana/mosdns/releases/download/v4.5.3/mosdns-linux-amd64.zip
+wget https://mirror.apad.pro/dns/easymosdns.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;解压安装&#34;&gt;解压安装&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;unzip mosdns-linux-amd64.zip &amp;quot;mosdns&amp;quot; -d /usr/local/bin
+chmod +x /usr/local/bin/mosdns
+tar xzf easymosdns.tar.gz
+mv easymosdns /etc/mosdns
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;安装-mosdns与easymosdns&#34;&gt;安装 mosdns与easymosdns&lt;/h2&gt;
+&lt;p&gt;依次运行下面的命令&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/etc/mosdns/tools/config-reset
+mosdns service install -d /etc/mosdns -c config.yaml
+mosdns service start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;5查看运行状态配置dead&#34;&gt;5.查看运行状态配置Dead&lt;/h1&gt;
+&lt;h2 id=&#34;查看mosdns运行状态&#34;&gt;查看mosdns运行状态&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;lsof -i :53 | grep LISTEN
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;查看dead运行状态&#34;&gt;查看Dead运行状态&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;lsof -i :2023 | grep LISTEN
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;配置dead&#34;&gt;配置Dead&lt;/h2&gt;
+&lt;h3 id=&#34;1-配置修改&#34;&gt;1、配置修改&lt;/h3&gt;
+&lt;p&gt;红色地方为重点标记&lt;br&gt;
+&lt;img src=&#34;https://tuchuang1.s3.bitiful.net/2023/09/20/650ad2cb726da.png&#34; alt=&#34;Pasted image 20230920185814.png&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://tuchuang1.s3.bitiful.net/2023/09/20/650ad35e7c1ef.png&#34; alt=&#34;Pasted image 20230920185847.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2-dns修改&#34;&gt;2、DNS修改&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;ipversion_prefer: 4
+
+upstream {
+
+mosdns: &#39;tcp+udp://127.0.0.1:53&#39;
+
+}
+
+routing {
+
+request {
+
+qname(geosite:cn) -&amp;gt; mosdns
+
+fallback: mosdns
+
+}
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;3-修改路由&#34;&gt;3、修改路由&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;#默认直连
+
+pname(dnsmasq, systemd-resolved) &amp;amp;&amp;amp; l4proto(udp) &amp;amp;&amp;amp; dport(53) -&amp;gt; must_direct
+pname(mosdns) -&amp;gt; must_rules
+pname(NetworkManager) -&amp;gt; direct
+domain(geosite:category-scholar-!cn, geosite:category-scholar-cn)-&amp;gt;direct
+
+##DNS
+dip(223.5.5.5, 223.6.6.6, 120.53.53.53, 119.29.29.29) -&amp;gt; must_direct
+dip(224.0.0.0/3, &#39;ff00::/8&#39;) -&amp;gt; must_direct
+dip(8.8.8.8, 8.8.4.4, 1.1.1.1, 1.0.0.1) -&amp;gt; proxy
+dip(208.67.222.222, 208.67.220.220) -&amp;gt; proxy
+domain(full: dns.alidns.com) -&amp;gt; must_direct
+domain(full: dns.opendns.com) -&amp;gt; proxy
+domain(full: doh.apad.pro) -&amp;gt; proxy
+# v6
+ipversion(6) -&amp;gt; proxy
+
+### Ads
+domain(geosite:category-ads) -&amp;gt; block
+domain(geosite:category-ads-all) -&amp;gt; block
+
+#自定义直连
+domain(suffix:mail.qq.com)-&amp;gt;direct
+dip(141.147.174.183)-&amp;gt; direct
+dip(223.5.5.5,124.221.78.208,8.218.127.29,1.2.4.8)-&amp;gt;direct
+dip(143.198.71.34,20.205.118.130,210.5.56.145)-&amp;gt;direct
+dip(120.53.53.53,223.6.6.6,158.101.69.6,18.207.178.0/24)-&amp;gt;direct
+
+### Direct
+domain(suffix: baidu.com) -&amp;gt; direct
+
+domain(keyword: baidu) -&amp;gt; direct
+domain(keyword: bilibili) -&amp;gt; direct
+domain(keyword: taobao) -&amp;gt; direct
+domain(keyword: alibabadns) -&amp;gt; direct
+domain(keyword: alicdn) -&amp;gt; direct
+domain(keyword: tbcache) -&amp;gt; direct
+domain(keyword: bilibili) -&amp;gt; direct
+domain(keyword: zhihu) -&amp;gt; direct
+domain(keyword: douyu) -&amp;gt; direct
+domain(keyword: kmf) -&amp;gt; direct
+
+domain(geosite:cn) -&amp;gt; direct
+domain(geosite:alibaba) -&amp;gt; direct
+domain(geosite:bilibili) -&amp;gt; direct
+domain(geosite:bilibili2) -&amp;gt; direct
+domain(geosite:tencent) -&amp;gt; direct
+domain(geosite:zhihu) -&amp;gt; direct
+domain(geosite:cloudflare-cn) -&amp;gt; direct
+domain(geosite:category-media-cn) -&amp;gt; direct
+domain(geosite:category-social-media-cn) -&amp;gt; direct
+domain(geosite:category-dev-cn) -&amp;gt; direct
+domain(geosite:category-bank-cn) -&amp;gt; direct
+domain(geosite:geolocation-cn) -&amp;gt; direct
+domain(geosite:apple-cn)-&amp;gt;direct
+domain(geosite:tld-cn)-&amp;gt;direct
+domain(geosite:category-games@cn)-&amp;gt;direct
+
+dip(geoip:private) -&amp;gt; direct
+dip(geoip:cn)-&amp;gt; direct
+
+
+#自定义代理
+domain(suffix:behance.net)-&amp;gt; iepl
+domain(suffix:deb.debian.org)-&amp;gt; iepl
+domain(suffix:docker.com)-&amp;gt;iepl
+
+# OPENAI
+domain(geosite:openai)-&amp;gt;ai
+domain(regex: &amp;quot;.+\.openai$&amp;quot;) -&amp;gt; ai
+dip(geoip:telegram) -&amp;gt; tg
+
+#youtube
+domain(geosite:youtube) -&amp;gt; ytb
+dip(geoip:google) -&amp;gt; proxy
+domain(regex: &amp;quot;.+\.google$&amp;quot;) -&amp;gt; ai
+dip(geoip:twitter) -&amp;gt; proxy
+dip(geoip:cloudflare)-&amp;gt; iepl
+domain(geosite:cloudflare) -&amp;gt; iepl
+#微软
+domain(geosite:microsoft)-&amp;gt;iepl
+  
+#默认代理
+fallback: proxy
+domain(geosite:geolocation-!cn) &amp;amp;&amp;amp;
+!domain(geosite:google-scholar,
+geosite:category-scholar-!cn,
+geosite:category-scholar-cn
+) -&amp;gt; proxy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;6下载运行更新geosite和geoip脚本&#34;&gt;6.下载运行更新geosite和geoip脚本&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;下载脚本，修改脚本中的地址跟账号密码&lt;/strong&gt;&lt;br&gt;
+![[update.sh]]&lt;/p&gt;
+&lt;p&gt;赋权：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chmod +x update.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后配置定时运行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;crontab -e
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在里面添加代码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;0 7 * * * /bin/sh /root/update.sh
+&lt;/code&gt;&lt;/pre&gt;
+">Debian安装Daed结合Mosdns</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" href="https://blog.usxx.xyz/post/about/"" data-c="
+          &lt;blockquote&gt;
+&lt;p&gt;欢迎来到我的小站呀，很高兴遇见你！🤝&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;关于本站&#34;&gt;🏠 关于本站&lt;/h2&gt;
+&lt;h2 id=&#34;博主是谁&#34;&gt;👨‍💻 博主是谁&lt;/h2&gt;
+&lt;h2 id=&#34;兴趣爱好&#34;&gt;⛹ 兴趣爱好&lt;/h2&gt;
+&lt;h2 id=&#34;联系我呀&#34;&gt;📬 联系我呀&lt;/h2&gt;
+">关于</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" href="https://blog.usxx.xyz/post/hello-gridea/"" data-c="
+          &lt;p&gt;👏  欢迎使用 &lt;strong&gt;Gridea&lt;/strong&gt; ！&lt;br&gt;
+✍️  &lt;strong&gt;Gridea&lt;/strong&gt; 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...&lt;/p&gt;
+&lt;!-- more --&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/getgridea/gridea&#34;&gt;Github&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://gridea.dev/&#34;&gt;Gridea 主页&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://fehey.com/&#34;&gt;示例网站&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;特性&#34;&gt;特性👇&lt;/h2&gt;
+&lt;p&gt;📝  你可以使用最酷的 &lt;strong&gt;Markdown&lt;/strong&gt; 语法，进行快速创作&lt;/p&gt;
+&lt;p&gt;🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片&lt;/p&gt;
+&lt;p&gt;🏷️  你可以对文章进行标签分组&lt;/p&gt;
+&lt;p&gt;📋  你可以自定义菜单，甚至可以创建外部链接菜单&lt;/p&gt;
+&lt;p&gt;💻  你可以在 &lt;strong&gt;Windows&lt;/strong&gt;，&lt;strong&gt;MacOS&lt;/strong&gt; 或 &lt;strong&gt;Linux&lt;/strong&gt; 设备上使用此客户端&lt;/p&gt;
+&lt;p&gt;🌎  你可以使用 &lt;strong&gt;𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌&lt;/strong&gt; 或 &lt;strong&gt;Coding Pages&lt;/strong&gt; 向世界展示，未来将支持更多平台&lt;/p&gt;
+&lt;p&gt;💬  你可以进行简单的配置，接入 &lt;a href=&#34;https://github.com/gitalk/gitalk&#34;&gt;Gitalk&lt;/a&gt; 或 &lt;a href=&#34;https://github.com/SukkaW/DisqusJS&#34;&gt;DisqusJS&lt;/a&gt; 评论系统&lt;/p&gt;
+&lt;p&gt;🇬🇧  你可以使用&lt;strong&gt;中文简体&lt;/strong&gt;或&lt;strong&gt;英语&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力&lt;/p&gt;
+&lt;p&gt;🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步&lt;/p&gt;
+&lt;p&gt;🌱 当然 &lt;strong&gt;Gridea&lt;/strong&gt; 还很年轻，有很多不足，但请相信，它会不停向前 🏃&lt;/p&gt;
+&lt;p&gt;未来，它一定会成为你离不开的伙伴&lt;/p&gt;
+&lt;p&gt;尽情发挥你的才华吧！&lt;/p&gt;
+&lt;p&gt;😘 Enjoy~&lt;/p&gt;
+">Hello Gridea</a>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<script>
+  // var escape = "[{&#34;content&#34;:&#34;&lt;h1 id=\&#34;1查看版本号和内核\&#34;&gt;1.查看版本号和内核&lt;/h1&gt;\n&lt;h2 id=\&#34;查看-debian-版本\&#34;&gt;查看 Debian 版本：&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;cat /etc/debian_version\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;查看当前正在使用的内核版本\&#34;&gt;查看当前正在使用的内核版本：&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;uname -r\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h1 id=\&#34;2升级内核\&#34;&gt;2.升级内核&lt;/h1&gt;\n&lt;p&gt;运行命令，搜索内核&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;apt search linux-image\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;安装内核\&#34;&gt;安装内核&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;# 随便拿一个版本来写\napt install linux-image-5.10.0-0.bpo.9-amd64\n# 可选,但有编译驱动需求则需要\napt install linux-header-5.10.0-0.bpo.9-amd64\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;更新grub重启\&#34;&gt;更新grub，重启&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;update-grub\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;删除旧内核-最少保证有一个内核否则系统挂了\&#34;&gt;删除旧内核 最少保证有一个内核,否则系统挂了&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;dpkg --list | grep linux-image\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;卸载内核\&#34;&gt;卸载内核&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;apt purge linux-image-4.19.0-14-amd64\n# 对应的 header 也能卸载\napt purge linux-header-4.19.0-14-amd64\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;更新grub\&#34;&gt;更新grub。&lt;/h2&gt;\n&lt;h1 id=\&#34;3安装dead\&#34;&gt;3.安装Dead&lt;/h1&gt;\n&lt;p&gt;下面代码一次运行&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;# 下载\nwget -P /tmp https://github.com/daeuniverse/daed/releases/latest/download/installer-daed-linux-$(arch).deb\n\n# 安装\ndpkg -i /tmp/installer-daed-linux-$(arch).deb\nrm /tmp/installer-daed-linux-$(arch).deb\n\n# Start daed\nsystemctl start daed\n\n# enable daed start automatically\nsystemctl enable daed\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h1 id=\&#34;4安装easymosdns\&#34;&gt;4.安装easymosdns&lt;/h1&gt;\n&lt;h2 id=\&#34;下载mosdns和easymosdns文件\&#34;&gt;下载mosdns和easymosdns文件&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;wget https://github.com/IrineSistiana/mosdns/releases/download/v4.5.3/mosdns-linux-amd64.zip\nwget https://mirror.apad.pro/dns/easymosdns.tar.gz\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;解压安装\&#34;&gt;解压安装&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;unzip mosdns-linux-amd64.zip &amp;quot;mosdns&amp;quot; -d /usr/local/bin\nchmod +x /usr/local/bin/mosdns\ntar xzf easymosdns.tar.gz\nmv easymosdns /etc/mosdns\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;安装-mosdns与easymosdns\&#34;&gt;安装 mosdns与easymosdns&lt;/h2&gt;\n&lt;p&gt;依次运行下面的命令&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;/etc/mosdns/tools/config-reset\nmosdns service install -d /etc/mosdns -c config.yaml\nmosdns service start\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h1 id=\&#34;5查看运行状态配置dead\&#34;&gt;5.查看运行状态配置Dead&lt;/h1&gt;\n&lt;h2 id=\&#34;查看mosdns运行状态\&#34;&gt;查看mosdns运行状态&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;lsof -i :53 | grep LISTEN\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;查看dead运行状态\&#34;&gt;查看Dead运行状态&lt;/h2&gt;\n&lt;pre&gt;&lt;code&gt;lsof -i :2023 | grep LISTEN\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h2 id=\&#34;配置dead\&#34;&gt;配置Dead&lt;/h2&gt;\n&lt;h3 id=\&#34;1-配置修改\&#34;&gt;1、配置修改&lt;/h3&gt;\n&lt;p&gt;红色地方为重点标记&lt;br&gt;\n&lt;img src=\&#34;https://tuchuang1.s3.bitiful.net/2023/09/20/650ad2cb726da.png\&#34; alt=\&#34;Pasted image 20230920185814.png\&#34; loading=\&#34;lazy\&#34;&gt;&lt;br&gt;\n&lt;img src=\&#34;https://tuchuang1.s3.bitiful.net/2023/09/20/650ad35e7c1ef.png\&#34; alt=\&#34;Pasted image 20230920185847.png\&#34; loading=\&#34;lazy\&#34;&gt;&lt;/p&gt;\n&lt;h3 id=\&#34;2-dns修改\&#34;&gt;2、DNS修改&lt;/h3&gt;\n&lt;pre&gt;&lt;code class=\&#34;language-yaml\&#34;&gt;ipversion_prefer: 4\n\nupstream {\n\nmosdns: &#39;tcp+udp://127.0.0.1:53&#39;\n\n}\n\nrouting {\n\nrequest {\n\nqname(geosite:cn) -&amp;gt; mosdns\n\nfallback: mosdns\n\n}\n\n}\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h3 id=\&#34;3-修改路由\&#34;&gt;3、修改路由&lt;/h3&gt;\n&lt;pre&gt;&lt;code&gt;#默认直连\n\npname(dnsmasq, systemd-resolved) &amp;amp;&amp;amp; l4proto(udp) &amp;amp;&amp;amp; dport(53) -&amp;gt; must_direct\npname(mosdns) -&amp;gt; must_rules\npname(NetworkManager) -&amp;gt; direct\ndomain(geosite:category-scholar-!cn, geosite:category-scholar-cn)-&amp;gt;direct\n\n##DNS\ndip(223.5.5.5, 223.6.6.6, 120.53.53.53, 119.29.29.29) -&amp;gt; must_direct\ndip(224.0.0.0/3, &#39;ff00::/8&#39;) -&amp;gt; must_direct\ndip(8.8.8.8, 8.8.4.4, 1.1.1.1, 1.0.0.1) -&amp;gt; proxy\ndip(208.67.222.222, 208.67.220.220) -&amp;gt; proxy\ndomain(full: dns.alidns.com) -&amp;gt; must_direct\ndomain(full: dns.opendns.com) -&amp;gt; proxy\ndomain(full: doh.apad.pro) -&amp;gt; proxy\n# v6\nipversion(6) -&amp;gt; proxy\n\n### Ads\ndomain(geosite:category-ads) -&amp;gt; block\ndomain(geosite:category-ads-all) -&amp;gt; block\n\n#自定义直连\ndomain(suffix:mail.qq.com)-&amp;gt;direct\ndip(141.147.174.183)-&amp;gt; direct\ndip(223.5.5.5,124.221.78.208,8.218.127.29,1.2.4.8)-&amp;gt;direct\ndip(143.198.71.34,20.205.118.130,210.5.56.145)-&amp;gt;direct\ndip(120.53.53.53,223.6.6.6,158.101.69.6,18.207.178.0/24)-&amp;gt;direct\n\n### Direct\ndomain(suffix: baidu.com) -&amp;gt; direct\n\ndomain(keyword: baidu) -&amp;gt; direct\ndomain(keyword: bilibili) -&amp;gt; direct\ndomain(keyword: taobao) -&amp;gt; direct\ndomain(keyword: alibabadns) -&amp;gt; direct\ndomain(keyword: alicdn) -&amp;gt; direct\ndomain(keyword: tbcache) -&amp;gt; direct\ndomain(keyword: bilibili) -&amp;gt; direct\ndomain(keyword: zhihu) -&amp;gt; direct\ndomain(keyword: douyu) -&amp;gt; direct\ndomain(keyword: kmf) -&amp;gt; direct\n\ndomain(geosite:cn) -&amp;gt; direct\ndomain(geosite:alibaba) -&amp;gt; direct\ndomain(geosite:bilibili) -&amp;gt; direct\ndomain(geosite:bilibili2) -&amp;gt; direct\ndomain(geosite:tencent) -&amp;gt; direct\ndomain(geosite:zhihu) -&amp;gt; direct\ndomain(geosite:cloudflare-cn) -&amp;gt; direct\ndomain(geosite:category-media-cn) -&amp;gt; direct\ndomain(geosite:category-social-media-cn) -&amp;gt; direct\ndomain(geosite:category-dev-cn) -&amp;gt; direct\ndomain(geosite:category-bank-cn) -&amp;gt; direct\ndomain(geosite:geolocation-cn) -&amp;gt; direct\ndomain(geosite:apple-cn)-&amp;gt;direct\ndomain(geosite:tld-cn)-&amp;gt;direct\ndomain(geosite:category-games@cn)-&amp;gt;direct\n\ndip(geoip:private) -&amp;gt; direct\ndip(geoip:cn)-&amp;gt; direct\n\n\n#自定义代理\ndomain(suffix:behance.net)-&amp;gt; iepl\ndomain(suffix:deb.debian.org)-&amp;gt; iepl\ndomain(suffix:docker.com)-&amp;gt;iepl\n\n# OPENAI\ndomain(geosite:openai)-&amp;gt;ai\ndomain(regex: &amp;quot;.+\\.openai$&amp;quot;) -&amp;gt; ai\ndip(geoip:telegram) -&amp;gt; tg\n\n#youtube\ndomain(geosite:youtube) -&amp;gt; ytb\ndip(geoip:google) -&amp;gt; proxy\ndomain(regex: &amp;quot;.+\\.google$&amp;quot;) -&amp;gt; ai\ndip(geoip:twitter) -&amp;gt; proxy\ndip(geoip:cloudflare)-&amp;gt; iepl\ndomain(geosite:cloudflare) -&amp;gt; iepl\n#微软\ndomain(geosite:microsoft)-&amp;gt;iepl\n  \n#默认代理\nfallback: proxy\ndomain(geosite:geolocation-!cn) &amp;amp;&amp;amp;\n!domain(geosite:google-scholar,\ngeosite:category-scholar-!cn,\ngeosite:category-scholar-cn\n) -&amp;gt; proxy\n&lt;/code&gt;&lt;/pre&gt;\n&lt;h1 id=\&#34;6下载运行更新geosite和geoip脚本\&#34;&gt;6.下载运行更新geosite和geoip脚本&lt;/h1&gt;\n&lt;p&gt;&lt;strong&gt;下载脚本，修改脚本中的地址跟账号密码&lt;/strong&gt;&lt;br&gt;\n![[update.sh]]&lt;/p&gt;\n&lt;p&gt;赋权：&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;chmod +x update.sh\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;然后配置定时运行&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;crontab -e\n&lt;/code&gt;&lt;/pre&gt;\n&lt;p&gt;在里面添加代码&lt;/p&gt;\n&lt;pre&gt;&lt;code&gt;0 7 * * * /bin/sh /root/update.sh\n&lt;/code&gt;&lt;/pre&gt;\n&#34;,&#34;fileName&#34;:&#34;debian-an-zhuang-daed-jie-he-mosdns&#34;,&#34;abstract&#34;:&#34;&#34;,&#34;title&#34;:&#34;Debian安装Daed结合Mosdns&#34;,&#34;tags&#34;:[],&#34;date&#34;:&#34;2023-09-20 20:01:49&#34;,&#34;dateFormat&#34;:&#34;2023-09-20&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://blog.usxx.xyz/post/debian-an-zhuang-daed-jie-he-mosdns/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;6 min read&#34;,&#34;time&#34;:306000,&#34;words&#34;:931,&#34;minutes&#34;:6},&#34;description&#34;:&#34;1.查看版本号和内核\n查看 Debian 版本：\ncat /etc/debian_version\n\n查看当前正在使用的内核版本：\nuname -r\n\n2.升级内核\n运行命令，搜索内核\napt search linux-image\n\n安装内核...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;&lt;a href=\&#34;#1%E6%9F%A5%E7%9C%8B%E7%89%88%E6%9C%AC%E5%8F%B7%E5%92%8C%E5%86%85%E6%A0%B8\&#34;&gt;1.查看版本号和内核&lt;/a&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E6%9F%A5%E7%9C%8B-debian-%E7%89%88%E6%9C%AC\&#34;&gt;查看 Debian 版本：&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E6%AD%A3%E5%9C%A8%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC\&#34;&gt;查看当前正在使用的内核版本：&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#2%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8\&#34;&gt;2.升级内核&lt;/a&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%AE%89%E8%A3%85%E5%86%85%E6%A0%B8\&#34;&gt;安装内核&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E6%9B%B4%E6%96%B0grub%E9%87%8D%E5%90%AF\&#34;&gt;更新grub，重启&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%88%A0%E9%99%A4%E6%97%A7%E5%86%85%E6%A0%B8-%E6%9C%80%E5%B0%91%E4%BF%9D%E8%AF%81%E6%9C%89%E4%B8%80%E4%B8%AA%E5%86%85%E6%A0%B8%E5%90%A6%E5%88%99%E7%B3%BB%E7%BB%9F%E6%8C%82%E4%BA%86\&#34;&gt;删除旧内核 最少保证有一个内核,否则系统挂了&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%8D%B8%E8%BD%BD%E5%86%85%E6%A0%B8\&#34;&gt;卸载内核&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E6%9B%B4%E6%96%B0grub\&#34;&gt;更新grub。&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#3%E5%AE%89%E8%A3%85dead\&#34;&gt;3.安装Dead&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#4%E5%AE%89%E8%A3%85easymosdns\&#34;&gt;4.安装easymosdns&lt;/a&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E4%B8%8B%E8%BD%BDmosdns%E5%92%8Ceasymosdns%E6%96%87%E4%BB%B6\&#34;&gt;下载mosdns和easymosdns文件&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E8%A7%A3%E5%8E%8B%E5%AE%89%E8%A3%85\&#34;&gt;解压安装&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%AE%89%E8%A3%85-mosdns%E4%B8%8Eeasymosdns\&#34;&gt;安装 mosdns与easymosdns&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#5%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81%E9%85%8D%E7%BD%AEdead\&#34;&gt;5.查看运行状态配置Dead&lt;/a&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E6%9F%A5%E7%9C%8Bmosdns%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81\&#34;&gt;查看mosdns运行状态&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E6%9F%A5%E7%9C%8Bdead%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81\&#34;&gt;查看Dead运行状态&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E9%85%8D%E7%BD%AEdead\&#34;&gt;配置Dead&lt;/a&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#1-%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9\&#34;&gt;1、配置修改&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#2-dns%E4%BF%AE%E6%94%B9\&#34;&gt;2、DNS修改&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#3-%E4%BF%AE%E6%94%B9%E8%B7%AF%E7%94%B1\&#34;&gt;3、修改路由&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#6%E4%B8%8B%E8%BD%BD%E8%BF%90%E8%A1%8C%E6%9B%B4%E6%96%B0geosite%E5%92%8Cgeoip%E8%84%9A%E6%9C%AC\&#34;&gt;6.下载运行更新geosite和geoip脚本&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&#34;},{&#34;content&#34;:&#34;&lt;blockquote&gt;\n&lt;p&gt;欢迎来到我的小站呀，很高兴遇见你！🤝&lt;/p&gt;\n&lt;/blockquote&gt;\n&lt;h2 id=\&#34;关于本站\&#34;&gt;🏠 关于本站&lt;/h2&gt;\n&lt;h2 id=\&#34;博主是谁\&#34;&gt;👨‍💻 博主是谁&lt;/h2&gt;\n&lt;h2 id=\&#34;兴趣爱好\&#34;&gt;⛹ 兴趣爱好&lt;/h2&gt;\n&lt;h2 id=\&#34;联系我呀\&#34;&gt;📬 联系我呀&lt;/h2&gt;\n&#34;,&#34;fileName&#34;:&#34;about&#34;,&#34;abstract&#34;:&#34;&#34;,&#34;title&#34;:&#34;关于&#34;,&#34;tags&#34;:[],&#34;date&#34;:&#34;2019-01-25 19:09:48&#34;,&#34;dateFormat&#34;:&#34;2019-01-25&#34;,&#34;feature&#34;:&#34;&#34;,&#34;link&#34;:&#34;https://blog.usxx.xyz/post/about/&#34;,&#34;hideInList&#34;:true,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;1 min read&#34;,&#34;time&#34;:6000,&#34;words&#34;:31,&#34;minutes&#34;:1},&#34;description&#34;:&#34;\n欢迎来到我的小站呀，很高兴遇见你！🤝\n\n🏠 关于本站\n👨‍💻 博主是谁\n⛹ 兴趣爱好\n📬 联系我呀\n...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99\&#34;&gt;🏠 关于本站&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81\&#34;&gt;👨‍💻 博主是谁&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD\&#34;&gt;⛹ 兴趣爱好&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80\&#34;&gt;📬 联系我呀&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&#34;},{&#34;content&#34;:&#34;&lt;p&gt;👏  欢迎使用 &lt;strong&gt;Gridea&lt;/strong&gt; ！&lt;br&gt;\n✍️  &lt;strong&gt;Gridea&lt;/strong&gt; 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...&lt;/p&gt;\n&lt;!-- more --&gt;\n&lt;p&gt;&lt;a href=\&#34;https://github.com/getgridea/gridea\&#34;&gt;Github&lt;/a&gt;&lt;br&gt;\n&lt;a href=\&#34;https://gridea.dev/\&#34;&gt;Gridea 主页&lt;/a&gt;&lt;br&gt;\n&lt;a href=\&#34;https://fehey.com/\&#34;&gt;示例网站&lt;/a&gt;&lt;/p&gt;\n&lt;h2 id=\&#34;特性\&#34;&gt;特性👇&lt;/h2&gt;\n&lt;p&gt;📝  你可以使用最酷的 &lt;strong&gt;Markdown&lt;/strong&gt; 语法，进行快速创作&lt;/p&gt;\n&lt;p&gt;🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片&lt;/p&gt;\n&lt;p&gt;🏷️  你可以对文章进行标签分组&lt;/p&gt;\n&lt;p&gt;📋  你可以自定义菜单，甚至可以创建外部链接菜单&lt;/p&gt;\n&lt;p&gt;💻  你可以在 &lt;strong&gt;Windows&lt;/strong&gt;，&lt;strong&gt;MacOS&lt;/strong&gt; 或 &lt;strong&gt;Linux&lt;/strong&gt; 设备上使用此客户端&lt;/p&gt;\n&lt;p&gt;🌎  你可以使用 &lt;strong&gt;𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌&lt;/strong&gt; 或 &lt;strong&gt;Coding Pages&lt;/strong&gt; 向世界展示，未来将支持更多平台&lt;/p&gt;\n&lt;p&gt;💬  你可以进行简单的配置，接入 &lt;a href=\&#34;https://github.com/gitalk/gitalk\&#34;&gt;Gitalk&lt;/a&gt; 或 &lt;a href=\&#34;https://github.com/SukkaW/DisqusJS\&#34;&gt;DisqusJS&lt;/a&gt; 评论系统&lt;/p&gt;\n&lt;p&gt;🇬🇧  你可以使用&lt;strong&gt;中文简体&lt;/strong&gt;或&lt;strong&gt;英语&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力&lt;/p&gt;\n&lt;p&gt;🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步&lt;/p&gt;\n&lt;p&gt;🌱 当然 &lt;strong&gt;Gridea&lt;/strong&gt; 还很年轻，有很多不足，但请相信，它会不停向前 🏃&lt;/p&gt;\n&lt;p&gt;未来，它一定会成为你离不开的伙伴&lt;/p&gt;\n&lt;p&gt;尽情发挥你的才华吧！&lt;/p&gt;\n&lt;p&gt;😘 Enjoy~&lt;/p&gt;\n&#34;,&#34;fileName&#34;:&#34;hello-gridea&#34;,&#34;abstract&#34;:&#34;&lt;p&gt;👏  欢迎使用 &lt;strong&gt;Gridea&lt;/strong&gt; ！&lt;br&gt;\n✍️  &lt;strong&gt;Gridea&lt;/strong&gt; 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...&lt;/p&gt;\n&#34;,&#34;title&#34;:&#34;Hello Gridea&#34;,&#34;tags&#34;:[{&#34;name&#34;:&#34;Gridea&#34;,&#34;slug&#34;:&#34;YvRI9AnZc&#34;,&#34;used&#34;:true,&#34;link&#34;:&#34;https://blog.usxx.xyz/tag/YvRI9AnZc/&#34;}],&#34;date&#34;:&#34;2018-12-12 00:00:00&#34;,&#34;dateFormat&#34;:&#34;2018-12-12&#34;,&#34;feature&#34;:&#34;https://blog.usxx.xyz/post-images/hello-gridea.png&#34;,&#34;link&#34;:&#34;https://blog.usxx.xyz/post/hello-gridea/&#34;,&#34;hideInList&#34;:false,&#34;isTop&#34;:false,&#34;stats&#34;:{&#34;text&#34;:&#34;2 min read&#34;,&#34;time&#34;:62000,&#34;words&#34;:298,&#34;minutes&#34;:2},&#34;description&#34;:&#34;👏  欢迎使用 Gridea ！\n✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...\n\nGithub\nGridea 主页\n示例网站\n特性👇\n📝  你可以使用最酷的 Markdo...&#34;,&#34;toc&#34;:&#34;&lt;ul class=\&#34;markdownIt-TOC\&#34;&gt;\n&lt;li&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=\&#34;#%E7%89%B9%E6%80%A7\&#34;&gt;特性👇&lt;/a&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;\n&#34;}]";
+  // var json = escape.substr(1, escape.length - 2);
+  // var datas = json.split(',');
+  // for (let i=0; i < datas.length; i++) {
+  //   let item = datas[i];
+  //   let attrs = item.split('34;:&#34')
+  //   debugger
+  //   console.log(datas[i])
+  // }
+  let escapeMap = new Map();
+  escapeMap.set('&#34;', '"');
+  escapeMap.set('&gt;', '>');
+  escapeMap.set('&#39;', "'");
+  escapeMap.set('&lt;', '<');
+  escapeMap.set('&quot;', '"');
+  escapeMap.set('&amp;', '&');
+</script> -->
+
+
+
+</html>
